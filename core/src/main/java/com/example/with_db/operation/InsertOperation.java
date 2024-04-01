@@ -1,7 +1,7 @@
-package org.example.generated;
+package com.example.with_db.operation;
 
-import com.example.with_db.database.TableName;
-import com.example.with_db.database.column.ColumnMeta;
+import com.example.with_db.ReflectionUtils;
+import com.example.with_db.database.SetupModel;
 import com.example.with_db.database.column.ColumnName;
 
 import java.sql.*;
@@ -9,10 +9,10 @@ import java.sql.Date;
 import java.util.*;
 
 public class InsertOperation {
-    public static void execute(final Connection connection, final List<Record> records) {
+    public static void execute(final Connection connection, final List<SetupModel> rows) {
         try {
             connection.setAutoCommit(false);
-            records.forEach(record -> execute(connection, record));
+            rows.forEach(row -> execute(connection, row));
             connection.commit();
 
         } catch (final Exception e) {
@@ -25,40 +25,39 @@ public class InsertOperation {
         }
     }
 
-    private static void execute(final Connection connection, final Record record) {
+    private static void execute(final Connection connection, final SetupModel row) {
+
+        final var tableMeta = row.tableMeta();
         final List<String> columnNames = new ArrayList<>();
         final List<Object> values = new ArrayList<>();
         final List<String> placeholders = new ArrayList<>();
 
-        for (var field : record.getClass().getDeclaredFields()) {
+        for (var field : row.getClass().getDeclaredFields()) {
             field.setAccessible(true);
             Optional.ofNullable(field.getAnnotation(ColumnName.class))
-                    .filter(it -> !Objects.equals(it.value(), "created_at")) // TODO: default値の取り扱い
+                    .filter(annotation -> {
+                        // デフォルト値やID採番されるカラムにはnullを渡さないよう除外する
+                        final var columnName = annotation.value();
+                        final var columnMeta = tableMeta.columnMeta(columnName);
+                        final var value = ReflectionUtils.getFieldValue(field, row);
+                        return !(value == null && columnMeta.hasDefault());
+                    })
                     .ifPresent(it -> {
                         columnNames.add(it.value());
-                        try {
-                            values.add(field.get(record));
-                        } catch (IllegalAccessException e) {
-                            throw new RuntimeException(e);
-                        }
+                        values.add(ReflectionUtils.getFieldValue(field, row));
                         placeholders.add("?");
                     });
         }
 
-        final var tableName = record.getClass().getAnnotation(TableName.class).value();
-
         final var sql = "INSERT INTO " +
-                tableName +
+                tableMeta.tableName() +
                 "(%s) ".formatted(String.join(", ", columnNames)) +
                 "VALUES " +
                 "(%s);".formatted(String.join(", ", placeholders));
 
-        final Map<String, ColumnMeta> columnMetaMapping = Mapping.getColumnMetaMapping(tableName);
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             for (int i = 0; i < values.size(); i++) {
-                final var meta = Optional.ofNullable(columnMetaMapping.get(columnNames.get(i)))
-                        .orElseThrow(() -> new IllegalArgumentException("%s does not exist in %s.".formatted(columnNames, tableName)));
-
+                final var meta = tableMeta.columnMeta(columnNames.get(i));
                 switch (meta.dataType()) {
                     case BIGINT:
                         ps.setLong(i + 1, (Long) values.get(i));

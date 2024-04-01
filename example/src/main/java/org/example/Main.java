@@ -1,9 +1,9 @@
 package org.example;
 
 
-import org.example.generated.InsertOperation;
-import org.example.generated.Member;
-import org.example.generated.TruncateOperation;
+import com.example.with_db.operation.InsertOperation;
+import com.example.with_db.operation.TruncateOperation;
+import org.example.generated.setup.Member;
 
 import java.sql.*;
 import java.util.List;
@@ -30,10 +30,8 @@ public class Main {
                         "postgres");
         ) {
 
-//            InsertOperation.execute(con, List.of(member, member2, member3));
+            InsertOperation.execute(con, List.of(member, member2, member3));
 //            TruncateOperation.execute(con, List.of("members"));
-
-
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

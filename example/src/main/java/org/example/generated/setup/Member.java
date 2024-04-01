@@ -1,22 +1,28 @@
-package org.example.generated;
+package org.example.generated.setup;
 
-
-import com.example.with_db.database.TableName;
+import com.example.with_db.database.Table;
 import com.example.with_db.database.column.ColumnName;
 import com.example.with_db.database.status.Ng;
 import com.example.with_db.database.status.Ok;
 import com.example.with_db.database.status.Status;
-import com.example.with_db.database.Record;
+import com.example.with_db.database.SetupModel;
+import org.example.generated.tables.Members;
 
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.function.Function;
 
-@TableName("members")
 public record Member(@ColumnName("id") Long id,
                      @ColumnName("name") String name,
                      @ColumnName("birthday") Date birthday,
-                     @ColumnName("created_at") Timestamp createdAt) implements Record {
+                     @ColumnName("created_at") Timestamp createdAt) implements SetupModel {
+
+    private static final Table TABLE_META = new Members();
+
+    @Override
+    public Table tableMeta() {
+        return TABLE_META;
+    }
 
     public static class Builder<HasId extends Status, HasName extends Status> {
         private final Long id;
