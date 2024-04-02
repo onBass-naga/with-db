@@ -44,7 +44,10 @@ public class SampleTest {
 
         Assertions.assertEquals(3, memberRecords.count());
 
-        Predicate<? super Map<String, Object>> birthdayIsNull = it -> Objects.isNull(it.get("birthday"));
+        Predicate<Map<String, Object>> birthdayIsNull = it -> Objects.isNull(it.get("birthday"));
         Assertions.assertEquals(2, memberRecords.filter(birthdayIsNull).count());
+
+        Predicate<Map<String, Object>> nameIsShizuka = it -> Objects.equals(it.get("name"), "Shizuka");
+        Assertions.assertEquals(1, memberRecords.filter(birthdayIsNull.and(nameIsShizuka)).count());
     }
 }
