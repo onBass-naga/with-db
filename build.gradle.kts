@@ -20,10 +20,13 @@ subprojects {
     }
 
     dependencies {
-        // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api
-        testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.2")
+        // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter
+        testImplementation("org.junit.jupiter:junit-jupiter:5.10.2")
     }
 
+    tasks.test {
+        useJUnitPlatform()
+    }
 
 //    // サブプロジェクトごとの設定
 //    // coreサブプロジェクトの設定

@@ -9,6 +9,11 @@ import java.sql.Date;
 import java.util.*;
 
 public class InsertOperation {
+
+    public static void execute(final Connection connection, final SetupModel... rows) {
+        execute(connection, List.of(rows));
+    }
+
     public static void execute(final Connection connection, final List<SetupModel> rows) {
         try {
             connection.setAutoCommit(false);

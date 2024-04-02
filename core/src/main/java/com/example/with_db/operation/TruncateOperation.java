@@ -1,17 +1,24 @@
 package com.example.with_db.operation;
 
+import com.example.with_db.database.Table;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
 public class TruncateOperation {
-    public static void execute(final Connection connection, final List<String> tableNames) {
+
+    public static void execute(final Connection connection, Table... tables) {
+        execute(connection, List.of(tables));
+    }
+
+    public static void execute(final Connection connection, final List<Table> tables) {
         try {
             connection.setAutoCommit(false);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        tableNames.forEach(name -> {
+        tables.stream().map(Table::tableName).forEach(name -> {
             try (final var stmt = connection.createStatement()) {
                 stmt.executeUpdate("TRUNCATE " + name);
                 connection.commit();
