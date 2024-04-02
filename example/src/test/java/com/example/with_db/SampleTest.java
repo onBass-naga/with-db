@@ -1,5 +1,6 @@
 package com.example.with_db;
 
+import com.example.with_db.assertion.DataSet;
 import com.example.with_db.operation.InsertOperation;
 import com.example.with_db.operation.TruncateOperation;
 import org.example.generated.setup.Member;
@@ -34,6 +35,8 @@ public class SampleTest {
                 builder.id(4L).name("Shizuka"));
 
         InsertOperation.execute(con, member, member2, member3);
+
+        final var dataSet = DataSet.load(con, Tables.MEMBERS);
 
         Assertions.assertEquals(1, 1);
     }
