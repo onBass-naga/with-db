@@ -23,7 +23,7 @@ public class DataSet {
         final Map<Class<? extends Table>, Records> dataSet = new HashMap<>();
 
         for (final var table : tables) {
-            final List<Map<String, Object>> records = new ArrayList<>();
+            final List<Row> records = new ArrayList<>();
 
             try {
                 final var stmt = connection.createStatement();
@@ -45,7 +45,7 @@ public class DataSet {
                         record.put(columnName, value);
                     }
 
-                    records.add(record);
+                    records.add(new Row(record));
                 }
 
                 dataSet.put(table.getClass(), new Records(records));

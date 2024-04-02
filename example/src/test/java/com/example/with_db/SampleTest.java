@@ -1,6 +1,7 @@
 package com.example.with_db;
 
 import com.example.with_db.assertion.DataSet;
+import com.example.with_db.assertion.Row;
 import com.example.with_db.operation.InsertOperation;
 import com.example.with_db.operation.TruncateOperation;
 import org.example.generated.setup.Member;
@@ -9,7 +10,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.sql.*;
-import java.util.Map;
 import java.util.Objects;
 import java.util.function.Predicate;
 
@@ -44,10 +44,10 @@ public class SampleTest {
 
         Assertions.assertEquals(3, memberRecords.count());
 
-        Predicate<Map<String, Object>> birthdayIsNull = it -> Objects.isNull(it.get("birthday"));
+        Predicate<Row> birthdayIsNull = it -> Objects.isNull(it.valueOf("birthday"));
         Assertions.assertEquals(2, memberRecords.filter(birthdayIsNull).count());
 
-        Predicate<Map<String, Object>> nameIsShizuka = it -> Objects.equals(it.get("name"), "Shizuka");
+        Predicate<Row> nameIsShizuka = it -> Objects.equals(it.valueOf("name"), "Shizuka");
         Assertions.assertEquals(1, memberRecords.filter(birthdayIsNull.and(nameIsShizuka)).count());
     }
 }
