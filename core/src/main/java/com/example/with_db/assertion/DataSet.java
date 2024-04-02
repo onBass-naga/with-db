@@ -4,16 +4,13 @@ import com.example.with_db.database.Table;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 public class DataSet {
-    private final Map<Class<? extends Table>, List<Map<String, Object>>> records;
+    private final Map<Class<? extends Table>, Records> records;
 
-    public DataSet(final Map<Class<? extends Table>, List<Map<String, Object>>> records) {
+    public DataSet(final Map<Class<? extends Table>, Records> records) {
         this.records = records;
     }
 
@@ -23,7 +20,7 @@ public class DataSet {
 
     public static DataSet load(final Connection connection, final List<Table> tables) {
 
-        final Map<Class<? extends Table>, List<Map<String, Object>>> dataSet = new HashMap<>();
+        final Map<Class<? extends Table>, Records> dataSet = new HashMap<>();
 
         for (final var table : tables) {
             final List<Map<String, Object>> records = new ArrayList<>();
@@ -51,7 +48,7 @@ public class DataSet {
                     records.add(record);
                 }
 
-                dataSet.put(table.getClass(), records);
+                dataSet.put(table.getClass(), new Records(records));
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -60,6 +57,10 @@ public class DataSet {
         return new DataSet(dataSet);
     }
 
+    public Records get(Table table) {
+        return Optional.ofNullable(records.get(table.getClass()))
+                .orElseThrow(() -> new IllegalArgumentException("%s not found.".formatted(table.getClass().getSimpleName())));
+    }
 
 //    public <T> Records<T> get(final Class<T> clazz) {
 //        final var value = records.get(clazz);

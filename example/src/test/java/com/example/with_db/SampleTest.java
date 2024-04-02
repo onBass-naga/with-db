@@ -9,6 +9,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.sql.*;
+import java.util.Map;
+import java.util.Objects;
+import java.util.function.Predicate;
 
 public class SampleTest {
 
@@ -37,7 +40,11 @@ public class SampleTest {
         InsertOperation.execute(con, member, member2, member3);
 
         final var dataSet = DataSet.load(con, Tables.MEMBERS);
+        final var memberRecords = dataSet.get(Tables.MEMBERS);
 
-        Assertions.assertEquals(1, 1);
+        Assertions.assertEquals(3, memberRecords.count());
+
+        Predicate<? super Map<String, Object>> birthdayIsNull = it -> Objects.isNull(it.get("birthday"));
+        Assertions.assertEquals(2, memberRecords.filter(birthdayIsNull).count());
     }
 }
