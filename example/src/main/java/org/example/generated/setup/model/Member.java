@@ -1,4 +1,4 @@
-package org.example.generated.setup;
+package org.example.generated.setup.model;
 
 import com.example.with_db.database.Table;
 import com.example.with_db.database.column.ColumnName;

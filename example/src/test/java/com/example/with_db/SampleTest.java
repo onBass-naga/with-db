@@ -1,10 +1,12 @@
 package com.example.with_db;
 
-import com.example.with_db.assertion.DataSet;
-import com.example.with_db.assertion.Row;
+import org.example.generated.assertion.DataSet;
 import com.example.with_db.operation.InsertOperation;
 import com.example.with_db.operation.TruncateOperation;
-import org.example.generated.setup.Member;
+import com.example.with_db.assertion.predicates.CommonPredicates;
+import org.example.generated.assertion.predicates.MemberPredicates;
+import org.example.generated.assertion.records.MemberEntity;
+import org.example.generated.setup.model.Member;
 import org.example.generated.tables.Tables;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -40,14 +42,23 @@ public class SampleTest {
         InsertOperation.execute(con, member, member2, member3);
 
         final var dataSet = DataSet.load(con, Tables.MEMBERS);
-        final var memberRecords = dataSet.get(Tables.MEMBERS);
+        final var members = dataSet.members();
 
-        Assertions.assertEquals(3, memberRecords.count());
+        Assertions.assertEquals(3, members.count());
 
-        Predicate<Row> birthdayIsNull = it -> Objects.isNull(it.valueOf("birthday"));
-        Assertions.assertEquals(2, memberRecords.filter(birthdayIsNull).count());
+        Predicate<MemberEntity> birthdayIsNull = it -> Objects.isNull(it.birthday());
+        Assertions.assertEquals(2, members.filter(birthdayIsNull).count());
 
-        Predicate<Row> nameIsShizuka = it -> Objects.equals(it.valueOf("name"), "Shizuka");
-        Assertions.assertEquals(1, memberRecords.filter(birthdayIsNull.and(nameIsShizuka)).count());
+        Predicate<MemberEntity> nameIsShizuka = it -> Objects.equals(it.name(), "Shizuka");
+        Assertions.assertEquals(1, members.filter(birthdayIsNull.and(nameIsShizuka)).count());
+
+        final var found = members.filter(MemberPredicates.id(2L)).one();
+        Assertions.assertEquals("Nobita", found.name());
+
+        final var idIsGreaterThan3 = MemberPredicates.id(id -> id > 3);
+        Assertions.assertEquals(1, members.filter(idIsGreaterThan3).count());
+
+        final var birthdayIsNonNull = MemberPredicates.birthday(CommonPredicates.nonNull());
+        Assertions.assertEquals(1, members.filter(birthdayIsNonNull).count());
     }
 }
