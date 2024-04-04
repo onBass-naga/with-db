@@ -15,6 +15,8 @@ import java.sql.*;
 import java.util.Objects;
 import java.util.function.Predicate;
 
+import static com.example.with_db.assertion.predicates.CommonPredicates.any;
+
 public class SampleTest {
 
     @Test
@@ -39,12 +41,15 @@ public class SampleTest {
         final var member3 = Member.build(builder ->
                 builder.id(4L).name("Shizuka"));
 
-        InsertOperation.execute(con, member, member2, member3);
+        final var member4 = Member.build(builder ->
+                builder.id(5L).name("Tom").birthday(Date.valueOf("1990-08-07")));
+
+        InsertOperation.execute(con, member, member2, member3, member4);
 
         final var dataSet = DataSet.load(con, Tables.MEMBERS);
         final var members = dataSet.members();
 
-        Assertions.assertEquals(3, members.count());
+        Assertions.assertEquals(4, members.count());
 
         Predicate<MemberEntity> birthdayIsNull = it -> Objects.isNull(it.birthday());
         Assertions.assertEquals(2, members.filter(birthdayIsNull).count());
@@ -56,9 +61,18 @@ public class SampleTest {
         Assertions.assertEquals("Nobita", found.name());
 
         final var idIsGreaterThan3 = MemberPredicates.id(id -> id > 3);
-        Assertions.assertEquals(1, members.filter(idIsGreaterThan3).count());
+        Assertions.assertEquals(2, members.filter(idIsGreaterThan3).count());
 
-        final var birthdayIsNonNull = MemberPredicates.birthday(CommonPredicates.nonNull());
-        Assertions.assertEquals(1, members.filter(birthdayIsNonNull).count());
+        final var birthdayIsNotNull = MemberPredicates.birthday(CommonPredicates.nonNull());
+        Assertions.assertEquals(2, members.filter(birthdayIsNotNull).count());
+
+        final var sameBirthday = MemberPredicates.editor(member)
+                .id(any())
+                .name(any())
+                .createdAt(any())
+                .edit();
+        Assertions.assertEquals(2, members.filter(sameBirthday).count());
+
+        Assertions.assertEquals(1, members.filter(MemberPredicates.of(member)).count());
     }
 }
