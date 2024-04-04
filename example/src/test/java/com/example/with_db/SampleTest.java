@@ -38,8 +38,7 @@ public class SampleTest {
                 builder.id(3L)
                         .name("Suneo"));
 
-        final var member3 = Member.build(builder ->
-                builder.id(4L).name("Shizuka"));
+        final var member3 = member2.editor().id(4L).name("Shizuka").edit();
 
         final var member4 = Member.build(builder ->
                 builder.id(5L).name("Tom").birthday(Date.valueOf("1990-08-07")));
@@ -66,7 +65,7 @@ public class SampleTest {
         final var birthdayIsNotNull = MemberPredicates.birthday(CommonPredicates.nonNull());
         Assertions.assertEquals(2, members.filter(birthdayIsNotNull).count());
 
-        final var sameBirthday = MemberPredicates.editor(member)
+        final var sameBirthday = MemberPredicates.editorOf(member)
                 .id(any())
                 .name(any())
                 .createdAt(any())

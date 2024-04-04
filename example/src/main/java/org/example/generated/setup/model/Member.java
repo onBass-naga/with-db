@@ -68,4 +68,45 @@ public record Member(@ColumnName("id") Long id,
         return build(f.apply(builder()));
     }
 
+    public static class Editor {
+        private Long id;
+        private String name;
+        private Date birthday;
+        private Timestamp createdAt;
+
+        public Editor(final Long id, final String name, final Date birthday, final Timestamp createdAt) {
+            this.id = id;
+            this.name = name;
+            this.birthday = birthday;
+            this.createdAt = createdAt;
+        }
+
+        public Editor id(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public Editor name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Editor birthday(Date birthday) {
+            this.birthday = birthday;
+            return this;
+        }
+
+        public Editor createdAt(Timestamp createdAt) {
+            this.createdAt = createdAt;
+            return this;
+        }
+
+        public Member edit() {
+            return new Member(this.id, this.name, this.birthday, this.createdAt);
+        }
+    }
+
+    public Editor editor() {
+        return new Editor(this.id, this.name, this.birthday, this.createdAt);
+    }
 }

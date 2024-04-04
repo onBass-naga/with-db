@@ -48,7 +48,7 @@ public class MemberPredicates {
         }
     }
 
-    public static Editor editor(final Member member) {
+    public static Editor editorOf(final Member member) {
         return new Editor(member);
     }
 
