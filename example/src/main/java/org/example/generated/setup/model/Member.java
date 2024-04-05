@@ -1,12 +1,11 @@
 package org.example.generated.setup.model;
 
-import com.example.with_db.database.Table;
 import com.example.with_db.database.column.ColumnName;
 import com.example.with_db.database.status.Ng;
 import com.example.with_db.database.status.Ok;
 import com.example.with_db.database.status.Status;
 import com.example.with_db.database.SetupModel;
-import org.example.generated.tables.Members;
+import org.example.generated.tables.Tables;
 
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -17,11 +16,9 @@ public record Member(@ColumnName("id") Long id,
                      @ColumnName("birthday") Date birthday,
                      @ColumnName("created_at") Timestamp createdAt) implements SetupModel {
 
-    private static final Table TABLE_META = new Members();
-
     @Override
-    public Table tableMeta() {
-        return TABLE_META;
+    public Tables tableMeta() {
+        return Tables.MEMBERS;
     }
 
     public static class Builder<HasId extends Status, HasName extends Status> {

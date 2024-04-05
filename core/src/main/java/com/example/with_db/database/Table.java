@@ -8,14 +8,14 @@ import java.util.Optional;
 
 public interface Table {
     String tableName();
-    Map<String, ColumnMeta> columnMetaMap();
+    Map<String, ColumnMeta> columnMap();
 
     default ColumnMeta columnMeta(final String columnName) {
-        return Optional.ofNullable(columnMetaMap().get(columnName))
+        return Optional.ofNullable(columnMap().get(columnName))
                 .orElseThrow(() -> new IllegalArgumentException("%s does not exist in %s.".formatted(columnName, tableName())));
     }
 
     default List<ColumnMeta> columnMetas() {
-        return columnMetaMap().values().stream().toList();
+        return columnMap().values().stream().toList();
     }
 }
