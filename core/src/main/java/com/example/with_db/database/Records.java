@@ -1,45 +1,51 @@
 package com.example.with_db.database;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-public record Records<T> (List<T> values) {
+public abstract class Records<E, R> {
 
-    public Records<T> filter(final Predicate<T> predicate) {
-        return filter(List.of(predicate));
-    }
+    protected List<E> values;
 
-    public Records<T> filter(final Predicate<T>... predicates) {
-        return filter(List.of(predicates));
-    }
+    abstract protected Class<R> getRecordsClass();
 
-    public Records<T> filter(final List<Predicate<T>> predicates) {
-        return this; //TODO
+    public R filter(final Predicate<E> predicate) {
+        try {
+            Constructor<R> constructor = getRecordsClass().getConstructor(List.class);
+            return constructor.newInstance(values.stream().filter(predicate).toList());
+        } catch (final InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public int count() {
-        return this.values.size(); // TODO
+        return this.values.size();
     }
 
-    public List<T> list() {
-        return this.values; // TODO
+    public List<E> list() {
+        return this.values;
     }
 
-    public T one() {
-        return this.values.get(0); // TODO
+    public E one() {
+        if (values.size() != 1) {
+            throw new IllegalStateException("values size: %s".formatted(values.size()));
+        }
+        return this.values.getFirst();
     }
 
-    public Optional<T> optional() {
-        return Optional.ofNullable(this.values.get(0)); //TODO
-    }
+    public Optional<E> optional() {
+        if (values.size() > 1) {
+            throw new IllegalStateException("values size: %s".formatted(values.size()));
+        }
 
-    public boolean exists() {
-        return true; //TODO
+        return values.isEmpty() ? Optional.empty() : Optional.of(this.values.getFirst());
     }
 
     public boolean notExist() {
-        return true; //TODO
+        return values.isEmpty();
     }
 
 }

@@ -1,22 +1,16 @@
 package org.example.generated.assertion.records;
 
+import com.example.with_db.database.Records;
+
 import java.util.List;
-import java.util.function.Predicate;
 
-public record MemberRecords(List<MemberEntity> rows) {
-    public MemberEntity one() {
-        return rows.getFirst();
+public class MemberRecords extends Records<MemberEntity, MemberRecords> {
+    public MemberRecords(final List<MemberEntity> values) {
+        super.values = values;
     }
 
-    public int count() {
-        return rows.size();
-    }
-
-    public boolean notExist() {
-        return rows.isEmpty();
-    }
-
-    public MemberRecords filter(final Predicate<MemberEntity> predicate) {
-        return new MemberRecords(rows.stream().filter(predicate).toList());
+    @Override
+    protected Class<MemberRecords> getRecordsClass() {
+        return MemberRecords.class;
     }
 }
