@@ -2,16 +2,22 @@ package org.example.generated.tables;
 
 import com.example.with_db.database.Table;
 import com.example.with_db.database.column.ColumnMeta;
-import com.example.with_db.database.column.DataType;
+import com.example.with_db.database.column.ResultSetDataType;
 
 import java.util.Map;
 
 public enum Tables implements Table {
     MEMBERS("members", Map.ofEntries(
-            Map.entry("id", new ColumnMeta("id", DataType.BIGINT, true, true)),
-            Map.entry("name", new ColumnMeta("name", DataType.VARCHAR, true, false)),
-            Map.entry("birthday", new ColumnMeta("birthday", DataType.DATE, false, false)),
-            Map.entry("created_at", new ColumnMeta("created_at", DataType.TIMESTAMP, true, true))
+            Map.entry("id", new ColumnMeta("id", ResultSetDataType.LONG, true, true)),
+            Map.entry("name", new ColumnMeta("name", ResultSetDataType.STRING, true, false)),
+            Map.entry("birthday", new ColumnMeta("birthday", ResultSetDataType.DATE, false, false)),
+            Map.entry("created_at", new ColumnMeta("created_at", ResultSetDataType.TIMESTAMP, true, true))
+    )),
+    DATA_TYPES("DATA_TYPES", Map.ofEntries(
+            Map.entry("id", new ColumnMeta("id", ResultSetDataType.LONG, true, true)),
+            Map.entry("name", new ColumnMeta("name", ResultSetDataType.STRING, true, false)),
+            Map.entry("birthday", new ColumnMeta("birthday", ResultSetDataType.DATE, false, false)),
+            Map.entry("created_at", new ColumnMeta("created_at", ResultSetDataType.TIMESTAMP, true, true))
     ));
 
     private final String tableName;

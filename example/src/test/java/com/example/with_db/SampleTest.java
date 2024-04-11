@@ -28,20 +28,20 @@ public class SampleTest {
 
         TruncateOperation.execute(con, Tables.MEMBERS);
 
-        final var member = Member.build(builder ->
-                builder.id(2L)
-                        .name("Nobita")
-                        .birthday(Date.valueOf("1990-08-07"))
-                        .createdAt(Timestamp.valueOf("2024-03-30 01:22:34")));
+        final var member = Member.builder()
+                .id(2L)
+                .name("Nobita")
+                .birthday(Date.valueOf("1990-08-07"))
+                .createdAt(Timestamp.valueOf("2024-03-30 01:22:34"))
+                .build();
 
-        final var member2 = Member.build(builder ->
-                builder.id(3L)
-                        .name("Suneo"));
+        final var member2 = Member.builder().id(3L)
+                .name("Suneo")
+                .build();
 
-        final var member3 = member2.editor().id(4L).name("Shizuka").edit();
+        final var member3 = member2.editor().id(4L).name("Shizuka").build();
 
-        final var member4 = Member.build(builder ->
-                builder.id(5L).name("Tom").birthday(Date.valueOf("1990-08-07")));
+        final var member4 = Member.builder().id(5L).name("Tom").birthday(Date.valueOf("1990-08-07")).build();
 
         InsertOperation.execute(con, member, member2, member3, member4);
 
@@ -73,5 +73,16 @@ public class SampleTest {
         Assertions.assertEquals(2, members.filter(sameBirthday).count());
 
         Assertions.assertEquals(1, members.filter(MemberPredicates.of(member)).count());
+    }
+
+    @Test
+    void test2() throws SQLException {
+        Connection con = DriverManager.getConnection(
+                "jdbc:postgresql://localhost:5432/sample",
+                "postgres",
+                "postgres");
+
+        final var dataSet = DataSet.load(con, Tables.DATA_TYPES);
+        System.out.println(dataSet.dataTypes());
     }
 }

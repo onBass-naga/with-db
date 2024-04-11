@@ -1,6 +1,8 @@
 package org.example.generated.assertion;
 
 import com.example.with_db.database.Table;
+import org.example.generated.assertion.records.DataTypeEntity;
+import org.example.generated.assertion.records.DataTypeRecords;
 import org.example.generated.assertion.records.MemberEntity;
 import org.example.generated.assertion.records.MemberRecords;
 
@@ -16,7 +18,10 @@ public class DataSet {
     private enum TABLE_SETTERS {
         MEMBERS("members",
                 (dataSet, records) -> dataSet.memberList = records.stream().map(MemberEntity.class::cast).toList(),
-                MemberEntity::of);
+                MemberEntity::of),
+        DATA_TYPES("DATA_TYPES",
+                (dataSet, records) -> dataSet.dataTypeList = records.stream().map(DataTypeEntity.class::cast).toList(),
+                DataTypeEntity::of);
 
         private final String tableName;
         private final BiConsumer<DataSet, List<Object>> setter;
@@ -32,11 +37,17 @@ public class DataSet {
     }
 
     private List<MemberEntity> memberList;
-
     public MemberRecords members() {
         return Optional.ofNullable(memberList)
                 .map(MemberRecords::new)
                 .orElseThrow(() -> new IllegalStateException("members did not load"));
+    }
+
+    private List<DataTypeEntity> dataTypeList;
+    public DataTypeRecords dataTypes() {
+        return Optional.ofNullable(dataTypeList)
+                .map(DataTypeRecords::new)
+                .orElseThrow(() -> new IllegalStateException("DATA_TYPES did not load"));
     }
 
     public static DataSet load(final Connection connection, final Table... tables) {
