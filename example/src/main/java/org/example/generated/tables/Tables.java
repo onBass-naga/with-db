@@ -7,7 +7,7 @@ import java.util.Map;
 
 public enum Tables implements Table {
 
-    DATA_TYPES("DATA_TYPES", Map.ofEntries(
+    DATA_TYPES("data_types", Map.ofEntries(
             Map.entry("bool_column", new ColumnMeta("bool_column", false)),
             Map.entry("bit_column", new ColumnMeta("bit_column", false)),
             Map.entry("int8_column", new ColumnMeta("int8_column", false)),

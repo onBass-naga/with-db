@@ -3,10 +3,12 @@ package org.example.generated.assertion.predicates;
 import org.example.generated.assertion.records.MemberEntity;
 import org.example.generated.setup.model.Member;
 
-import java.sql.Date;
-import java.sql.Timestamp;
 import java.util.Objects;
 import java.util.function.Predicate;
+import java.lang.Long;
+import java.lang.String;
+import java.sql.Date;
+import java.sql.Timestamp;
 
 public class MemberPredicates {
 
@@ -16,11 +18,11 @@ public class MemberPredicates {
         private Predicate<MemberEntity> birthday;
         private Predicate<MemberEntity> createdAt;
 
-        public Editor(final Member member) {
-            this.id = (entity) -> Objects.equals(entity.id(), member.id());
-            this.name = (entity) -> Objects.equals(entity.name(), member.name());
-            this.birthday = (entity) -> Objects.equals(entity.birthday(), member.birthday());
-            this.createdAt = (entity) -> Objects.equals(entity.createdAt(), member.createdAt());
+        public Editor(final Member Member) {
+            this.id = (entity) -> Objects.equals(entity.id(), Member.id());
+            this.name = (entity) -> Objects.equals(entity.name(), Member.name());
+            this.birthday = (entity) -> Objects.equals(entity.birthday(), Member.birthday());
+            this.createdAt = (entity) -> Objects.equals(entity.createdAt(), Member.createdAt());
         }
 
         public Editor id(final Predicate<Long> predicate) {
@@ -43,17 +45,18 @@ public class MemberPredicates {
             return this;
         }
 
+
         public Predicate<MemberEntity> edit() {
             return id.and(name.and(birthday.and(createdAt)));
         }
     }
 
-    public static Editor editorOf(final Member member) {
-        return new Editor(member);
+    public static Editor editorOf(final Member Member) {
+        return new Editor(Member);
     }
 
-    public static Predicate<MemberEntity> of(final Member member) {
-        return new Editor(member).edit();
+    public static Predicate<MemberEntity> of(final Member Member) {
+        return new Editor(Member).edit();
     }
 
     public static Predicate<MemberEntity> id(final Predicate<Long> predicate) {
@@ -95,4 +98,5 @@ public class MemberPredicates {
     public static Predicate<MemberEntity> createdAt(final String createdAt) {
         return (entity) -> Objects.equals(entity.createdAt(), Timestamp.valueOf(createdAt));
     }
+
 }

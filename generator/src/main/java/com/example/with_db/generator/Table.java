@@ -15,6 +15,16 @@ public record Table(String name, List<Column> columns) {
         return inflector.singularize(inflector.upperCamelCase(name.toLowerCase()));
     }
 
+    public String lowerCamelCaseSingularName() {
+        final var inflector = Inflector.getInstance();
+        return inflector.singularize(inflector.lowerCamelCase(name.toLowerCase()));
+    }
+
+    public String lowerCamelCaseName() {
+        final var inflector = Inflector.getInstance();
+        return inflector.lowerCamelCase(name.toLowerCase());
+    }
+
     public String upperCaseName() {
         return name.toUpperCase();
     }

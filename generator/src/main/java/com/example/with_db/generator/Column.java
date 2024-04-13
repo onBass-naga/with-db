@@ -50,6 +50,10 @@ public record Column(
         return dataType.getClassName();
     }
 
+    public String getter() {
+        return dataType == DataType.BYTE_ARRAY ? "getBytes" : "get%s".formatted(dataType.getClassName());
+    }
+
     public Optional<String> fullyQualifiedClassNameOpt() {
         return dataType.getFullyQualifiedClassNameOpt();
     }

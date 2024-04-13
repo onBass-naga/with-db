@@ -1,10 +1,10 @@
-package org.example.generated.assertion;
+package ${packageName};
 
 import com.example.with_db.database.Table;
-import org.example.generated.assertion.records.DataTypeEntity;
-import org.example.generated.assertion.records.DataTypeRecords;
-import org.example.generated.assertion.records.MemberEntity;
-import org.example.generated.assertion.records.MemberRecords;
+<#list tables as table>
+import org.example.generated.assertion.records.${table.upperCamelCaseSingularName()}Entity;
+import org.example.generated.assertion.records.${table.upperCamelCaseSingularName()}Records;
+</#list>
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -16,12 +16,11 @@ import java.util.function.Function;
 public class DataSet {
 
     private enum TABLE_SETTERS {
-        DATA_TYPES("data_types",
-                (dataSet, records) -> dataSet.dataTypeList = records.stream().map(DataTypeEntity.class::cast).toList(),
-                DataTypeEntity::of),
-        MEMBERS("members",
-                (dataSet, records) -> dataSet.memberList = records.stream().map(MemberEntity.class::cast).toList(),
-                MemberEntity::of);
+        <#list tables as table>
+        ${table.upperCaseName()}("${table.name()}",
+                (dataSet, records) -> dataSet.${table.lowerCamelCaseSingularName()}List = records.stream().map(${table.upperCamelCaseSingularName()}Entity.class::cast).toList(),
+                ${table.upperCamelCaseSingularName()}Entity::of)<#if table_has_next>,<#else>;</#if>
+        </#list>
 
         private final String tableName;
         private final BiConsumer<DataSet, List<Object>> setter;
@@ -36,20 +35,15 @@ public class DataSet {
         }
     }
 
-    private List<DataTypeEntity> dataTypeList;
-    public DataTypeRecords dataTypes() {
-        return Optional.ofNullable(dataTypeList)
-                .map(DataTypeRecords::new)
-                .orElseThrow(() -> new IllegalStateException("data_types did not load"));
+    <#list tables as table>
+    private List<${table.upperCamelCaseSingularName()}Entity> ${table.lowerCamelCaseSingularName()}List;
+    public ${table.upperCamelCaseSingularName()}Records ${table.lowerCamelCaseName()}() {
+        return Optional.ofNullable(${table.lowerCamelCaseSingularName()}List)
+                .map(${table.upperCamelCaseSingularName()}Records::new)
+                .orElseThrow(() -> new IllegalStateException("${table.name()} did not load"));
     }
 
-    private List<MemberEntity> memberList;
-    public MemberRecords members() {
-        return Optional.ofNullable(memberList)
-                .map(MemberRecords::new)
-                .orElseThrow(() -> new IllegalStateException("members did not load"));
-    }
-
+    </#list>
 
     public static DataSet load(final Connection connection, final Table... tables) {
         return load(connection, List.of(tables));

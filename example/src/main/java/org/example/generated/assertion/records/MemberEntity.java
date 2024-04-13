@@ -1,8 +1,10 @@
 package org.example.generated.assertion.records;
 
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.lang.Long;
+import java.lang.String;
+import java.sql.Date;
 import java.sql.Timestamp;
 
 public record MemberEntity(

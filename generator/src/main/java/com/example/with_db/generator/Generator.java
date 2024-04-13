@@ -1,7 +1,6 @@
 package com.example.with_db.generator;
 
-import com.example.with_db.generator.artifacts.SetupModel;
-import com.example.with_db.generator.artifacts.TablesEnum;
+import com.example.with_db.generator.artifacts.*;
 
 import java.lang.reflect.InvocationTargetException;
 import java.sql.*;
@@ -17,11 +16,15 @@ public class Generator {
 
             final var tables = tableNames.stream().map(tableName -> createTableModel(tableName, connection)).toList();
 
-            TablesEnum.generate(settings, tables);
+//            TablesEnum.generate(settings, tables);
+//            DataSet.generate(settings, tables);
 
-//            for (var table: tables) {
+            for (var table: tables) {
 //                SetupModel.generate(settings, table);
-//            }
+//                Entity.generate(settings, table);
+//                Records.generate(settings, table);
+                Predicates.generate(settings, table);
+            }
 
         } catch (final SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException |
                        InvocationTargetException | NoSuchMethodException e) {
