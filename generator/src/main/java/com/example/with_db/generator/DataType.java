@@ -11,14 +11,14 @@ import java.util.Optional;
 
 public enum DataType {
     STRING(String.class, "String", List.of(Types.VARCHAR, Types.NVARCHAR, Types.CHAR, Types.NCHAR, Types.LONGVARCHAR, Types.LONGNVARCHAR, Types.SQLXML)),
-    SHORT(Short.class, "Short", List.of(Types.TINYINT)),
+    SHORT(Short.class, "Short", List.of(Types.TINYINT, Types.SMALLINT)),
     INTEGER(Integer.class, "Integer", List.of(Types.INTEGER)),
     LONG(Long.class, "Long", List.of(Types.BIGINT)),
     DOUBLE(Double.class, "Double", List.of(Types.DOUBLE)),
     FLOAT(Float.class, "Float", List.of(Types.FLOAT)),
     BIG_DECIMAL(BigDecimal.class, "BigDecimal", List.of(Types.NUMERIC, Types.DECIMAL)),
     BOOLEAN(Boolean.class, "Boolean", List.of(Types.BIT, Types.BOOLEAN)),
-    BYTE_ARRAY(null, "byte[]", List.of(Types.SMALLINT)),
+    BYTE_ARRAY(null, "byte[]", List.of(Types.BINARY)),
     DATE(Date.class, "Date", List.of(Types.DATE)),
     TIME(Time.class, "Time", List.of(Types.TIME, Types.TIME_WITH_TIMEZONE)),
     TIMESTAMP(Timestamp.class, "Timestamp", List.of(Types.TIMESTAMP, Types.TIMESTAMP_WITH_TIMEZONE));
@@ -38,7 +38,7 @@ public enum DataType {
         return Arrays.stream(values())
                 .filter(dataType -> dataType.sqlTypes.contains(sqlDataType))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("%s is not defined.".formatted(sqlDataType)));
+                .orElse(DataType.STRING);
     }
 
     public Optional<String> getFullyQualifiedClassNameOpt() {

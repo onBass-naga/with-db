@@ -8,8 +8,8 @@ class TableNameTest {
 
     @Test
     void pascalCaseSingular() {
-        final var sut = new TableName("ORDER_DETAILS");
-        final var actual = sut.upperCamelCaseSingular();
+        final var sut = new Table("ORDER_DETAILS");
+        final var actual = sut.upperCamelCaseSingularName();
         assertEquals("OrderDetail", actual);
     }
 }

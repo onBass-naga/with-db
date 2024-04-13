@@ -1,6 +1,7 @@
 package com.example.with_db.generator;
 
 import com.example.with_db.generator.artifacts.SetupModel;
+import com.example.with_db.generator.artifacts.TablesEnum;
 
 import java.lang.reflect.InvocationTargetException;
 import java.sql.*;
@@ -14,18 +15,13 @@ public class Generator {
         try (var connection = initConnection(settings)) {
             final var tableNames = getTableNames(connection);
 
-            DatabaseMetaData meta = connection.getMetaData();
-            ResultSet result = meta.getColumns(null, connection.getSchema(), tableNames.get(1).value(), "%");
+            final var tables = tableNames.stream().map(tableName -> createTableModel(tableName, connection)).toList();
 
-            final var columnMetas = new ArrayList<ColumnMeta>();
-            while (result.next()) {
-                columnMetas.add(ColumnMeta.of(result));
-            }
+            TablesEnum.generate(settings, tables);
 
-            System.out.println(columnMetas);
-
-            SetupModel.generate(settings, tableNames.get(1), columnMetas);
-
+//            for (var table: tables) {
+//                SetupModel.generate(settings, table);
+//            }
 
         } catch (final SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException |
                        InvocationTargetException | NoSuchMethodException e) {
@@ -33,14 +29,31 @@ public class Generator {
         }
     }
 
-    static List<TableName> getTableNames(Connection connection) throws SQLException {
+    private Table createTableModel(String tableName, Connection connection) {
+
+        try {
+            DatabaseMetaData meta = connection.getMetaData();
+            ResultSet result = meta.getColumns(null, connection.getSchema(), tableName, "%");
+
+            final var columns = new ArrayList<Column>();
+            while (result.next()) {
+                columns.add(Column.of(result));
+            }
+
+            return new Table(tableName, columns);
+        } catch (final SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    static List<String> getTableNames(Connection connection) throws SQLException {
         DatabaseMetaData meta = connection.getMetaData();
         ResultSet result = meta.getTables(null, connection.getSchema(), "%", new String[]{"TABLE"});
 
-        List<TableName> tableNames = new ArrayList<>();
+        List<String> tableNames = new ArrayList<>();
         while (result.next()) {
             final var name = result.getString("TABLE_NAME");
-            tableNames.add(new TableName(name));
+            tableNames.add(name);
         }
         return tableNames;
     }

@@ -1,13 +1,15 @@
 package com.example.with_db.generator;
 
+import org.modeshape.common.text.Inflector;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-public record ColumnMeta(
-        ColumnName name,
+public record Column(
+        String name,
         DataType dataType,
         String typeName,
         int decimalDigits,
@@ -17,11 +19,11 @@ public record ColumnMeta(
 ) {
     private static final List<String> YES_WORDS = List.of("YES", "Y");
 
-    public static ColumnMeta of(final ResultSet resultSet) {
+    public static Column of(final ResultSet resultSet) {
         try {
             // https://learn.microsoft.com/ja-jp/sql/connect/jdbc/reference/getcolumns-method-sqlserverdatabasemetadata?view=sql-server-ver16
-            return new ColumnMeta(
-                    new ColumnName(resultSet.getString("COLUMN_NAME")),
+            return new Column(
+                    resultSet.getString("COLUMN_NAME"),
                     DataType.of(resultSet.getInt("DATA_TYPE")),
                     resultSet.getString("TYPE_NAME"),
                     resultSet.getInt("DECIMAL_DIGITS"),
@@ -34,6 +36,16 @@ public record ColumnMeta(
         }
     }
 
+    public String upperCamelCaseName() {
+        final var inflector = Inflector.getInstance();
+        return inflector.upperCamelCase(name.toLowerCase());
+    }
+
+    public String lowerCamelCaseName() {
+        final var inflector = Inflector.getInstance();
+        return inflector.lowerCamelCase(name.toLowerCase());
+    }
+
     public String className() {
         return dataType.getClassName();
     }
@@ -44,5 +56,9 @@ public record ColumnMeta(
 
     public boolean isRequired() {
         return !isNullable && Objects.isNull(columnDefault) && !isAutoincrement;
+    }
+
+    public String requiredText() {
+        return String.valueOf(isRequired());
     }
 }

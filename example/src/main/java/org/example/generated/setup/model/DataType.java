@@ -1,109 +1,348 @@
 package org.example.generated.setup.model;
 
-import com.example.with_db.database.SetupModel;
 import com.example.with_db.database.column.ColumnName;
-import com.example.with_db.database.status.Ng;
-import com.example.with_db.database.status.Ok;
-import com.example.with_db.database.status.Status;
+import com.example.with_db.database.SetupModel;
 import org.example.generated.tables.Tables;
 
+import java.lang.Boolean;
+import java.lang.Double;
+import java.lang.Integer;
+import java.lang.Long;
+import java.lang.Short;
+import java.lang.String;
+import java.math.BigDecimal;
 import java.sql.Date;
+import java.sql.Time;
 import java.sql.Timestamp;
-import java.util.function.Function;
 
-public record DataType(@ColumnName("id") Long id,
-                       @ColumnName("name") String name,
-                       @ColumnName("birthday") Date birthday,
-                       @ColumnName("created_at") Timestamp createdAt) implements SetupModel {
+public record DataType(
+        @ColumnName("bool_column") Boolean boolColumn,
+        @ColumnName("bit_column") Boolean bitColumn,
+        @ColumnName("int8_column") Long int8Column,
+        @ColumnName("bigserial_column") Long bigserialColumn,
+        @ColumnName("oid_column") Long oidColumn,
+        @ColumnName("bytea_column") byte[] byteaColumn,
+        @ColumnName("char_column") String charColumn,
+        @ColumnName("bpchar_column") String bpcharColumn,
+        @ColumnName("numeric_column") BigDecimal numericColumn,
+        @ColumnName("int4_column") Integer int4Column,
+        @ColumnName("serial_column") Integer serialColumn,
+        @ColumnName("int2_column") Short int2Column,
+        @ColumnName("smallserial_column") Short smallserialColumn,
+        @ColumnName("float4_column") String float4Column,
+        @ColumnName("float8_column") Double float8Column,
+        @ColumnName("money_column") Double moneyColumn,
+        @ColumnName("name_column") String nameColumn,
+        @ColumnName("text_column") String textColumn,
+        @ColumnName("varchar_column") String varcharColumn,
+        @ColumnName("date_column") Date dateColumn,
+        @ColumnName("time_column") Time timeColumn,
+        @ColumnName("timetz_column") Time timetzColumn,
+        @ColumnName("timestamp_column") Timestamp timestampColumn,
+        @ColumnName("timestamptz_column") Timestamp timestamptzColumn,
+        @ColumnName("xml_column") String xmlColumn
+) implements SetupModel {
 
     @Override
     public Tables tableMeta() {
-        return Tables.MEMBERS;
+        return Tables.DATA_TYPES;
     }
 
-    public static class Builder<HasId extends Status, HasName extends Status> {
-        private final Long id;
-        private final String name;
-        private final Date birthday;
-        private final Timestamp createdAt;
+    public static class Builder {
+        private Boolean boolColumn;
+        private Boolean bitColumn;
+        private Long int8Column;
+        private Long bigserialColumn;
+        private Long oidColumn;
+        private byte[] byteaColumn;
+        private String charColumn;
+        private String bpcharColumn;
+        private BigDecimal numericColumn;
+        private Integer int4Column;
+        private Integer serialColumn;
+        private Short int2Column;
+        private Short smallserialColumn;
+        private String float4Column;
+        private Double float8Column;
+        private Double moneyColumn;
+        private String nameColumn;
+        private String textColumn;
+        private String varcharColumn;
+        private Date dateColumn;
+        private Time timeColumn;
+        private Time timetzColumn;
+        private Timestamp timestampColumn;
+        private Timestamp timestamptzColumn;
+        private String xmlColumn;
 
-        public Builder(Long id, String name, Date birthday, Timestamp createdAt) {
-            this.id = id;
-            this.name = name;
-            this.birthday = birthday;
-            this.createdAt = createdAt;
+        public Builder(
+                Boolean boolColumn,
+                Boolean bitColumn,
+                Long int8Column,
+                Long bigserialColumn,
+                Long oidColumn,
+                byte[] byteaColumn,
+                String charColumn,
+                String bpcharColumn,
+                BigDecimal numericColumn,
+                Integer int4Column,
+                Integer serialColumn,
+                Short int2Column,
+                Short smallserialColumn,
+                String float4Column,
+                Double float8Column,
+                Double moneyColumn,
+                String nameColumn,
+                String textColumn,
+                String varcharColumn,
+                Date dateColumn,
+                Time timeColumn,
+                Time timetzColumn,
+                Timestamp timestampColumn,
+                Timestamp timestamptzColumn,
+                String xmlColumn
+        ) {
+            this.boolColumn = boolColumn;
+            this.bitColumn = bitColumn;
+            this.int8Column = int8Column;
+            this.bigserialColumn = bigserialColumn;
+            this.oidColumn = oidColumn;
+            this.byteaColumn = byteaColumn;
+            this.charColumn = charColumn;
+            this.bpcharColumn = bpcharColumn;
+            this.numericColumn = numericColumn;
+            this.int4Column = int4Column;
+            this.serialColumn = serialColumn;
+            this.int2Column = int2Column;
+            this.smallserialColumn = smallserialColumn;
+            this.float4Column = float4Column;
+            this.float8Column = float8Column;
+            this.moneyColumn = moneyColumn;
+            this.nameColumn = nameColumn;
+            this.textColumn = textColumn;
+            this.varcharColumn = varcharColumn;
+            this.dateColumn = dateColumn;
+            this.timeColumn = timeColumn;
+            this.timetzColumn = timetzColumn;
+            this.timestampColumn = timestampColumn;
+            this.timestamptzColumn = timestamptzColumn;
+            this.xmlColumn = xmlColumn;
         }
 
-        public Builder<Ok, HasName> id(Long id) {
-            return new Builder<>(id, name, birthday, createdAt);
+        public Builder boolColumn(final Boolean boolColumn) {
+            this.boolColumn = boolColumn;
+            return this;
         }
 
-        public Builder<HasId, Ok> name(String name) {
-            return new Builder<>(id, name, birthday, createdAt);
+        public Builder bitColumn(final Boolean bitColumn) {
+            this.bitColumn = bitColumn;
+            return this;
         }
 
-        public Builder<HasId, HasName> birthday(Date birthday) {
-            return new Builder<>(id, name, birthday, createdAt);
+        public Builder int8Column(final Long int8Column) {
+            this.int8Column = int8Column;
+            return this;
         }
 
-        public Builder<HasId, HasName> createdAt(Timestamp createdAt) {
-            return new Builder<>(id, name, birthday, createdAt);
+        public Builder bigserialColumn(final Long bigserialColumn) {
+            this.bigserialColumn = bigserialColumn;
+            return this;
+        }
+
+        public Builder oidColumn(final Long oidColumn) {
+            this.oidColumn = oidColumn;
+            return this;
+        }
+
+        public Builder byteaColumn(final byte[] byteaColumn) {
+            this.byteaColumn = byteaColumn;
+            return this;
+        }
+
+        public Builder charColumn(final String charColumn) {
+            this.charColumn = charColumn;
+            return this;
+        }
+
+        public Builder bpcharColumn(final String bpcharColumn) {
+            this.bpcharColumn = bpcharColumn;
+            return this;
+        }
+
+        public Builder numericColumn(final BigDecimal numericColumn) {
+            this.numericColumn = numericColumn;
+            return this;
+        }
+
+        public Builder int4Column(final Integer int4Column) {
+            this.int4Column = int4Column;
+            return this;
+        }
+
+        public Builder serialColumn(final Integer serialColumn) {
+            this.serialColumn = serialColumn;
+            return this;
+        }
+
+        public Builder int2Column(final Short int2Column) {
+            this.int2Column = int2Column;
+            return this;
+        }
+
+        public Builder smallserialColumn(final Short smallserialColumn) {
+            this.smallserialColumn = smallserialColumn;
+            return this;
+        }
+
+        public Builder float4Column(final String float4Column) {
+            this.float4Column = float4Column;
+            return this;
+        }
+
+        public Builder float8Column(final Double float8Column) {
+            this.float8Column = float8Column;
+            return this;
+        }
+
+        public Builder moneyColumn(final Double moneyColumn) {
+            this.moneyColumn = moneyColumn;
+            return this;
+        }
+
+        public Builder nameColumn(final String nameColumn) {
+            this.nameColumn = nameColumn;
+            return this;
+        }
+
+        public Builder textColumn(final String textColumn) {
+            this.textColumn = textColumn;
+            return this;
+        }
+
+        public Builder varcharColumn(final String varcharColumn) {
+            this.varcharColumn = varcharColumn;
+            return this;
+        }
+
+        public Builder dateColumn(final Date dateColumn) {
+            this.dateColumn = dateColumn;
+            return this;
+        }
+
+        public Builder timeColumn(final Time timeColumn) {
+            this.timeColumn = timeColumn;
+            return this;
+        }
+
+        public Builder timetzColumn(final Time timetzColumn) {
+            this.timetzColumn = timetzColumn;
+            return this;
+        }
+
+        public Builder timestampColumn(final Timestamp timestampColumn) {
+            this.timestampColumn = timestampColumn;
+            return this;
+        }
+
+        public Builder timestamptzColumn(final Timestamp timestamptzColumn) {
+            this.timestamptzColumn = timestamptzColumn;
+            return this;
+        }
+
+        public Builder xmlColumn(final String xmlColumn) {
+            this.xmlColumn = xmlColumn;
+            return this;
+        }
+
+
+        public DataType build() {
+            return new DataType(
+                    this.boolColumn,
+                    this.bitColumn,
+                    this.int8Column,
+                    this.bigserialColumn,
+                    this.oidColumn,
+                    this.byteaColumn,
+                    this.charColumn,
+                    this.bpcharColumn,
+                    this.numericColumn,
+                    this.int4Column,
+                    this.serialColumn,
+                    this.int2Column,
+                    this.smallserialColumn,
+                    this.float4Column,
+                    this.float8Column,
+                    this.moneyColumn,
+                    this.nameColumn,
+                    this.textColumn,
+                    this.varcharColumn,
+                    this.dateColumn,
+                    this.timeColumn,
+                    this.timetzColumn,
+                    this.timestampColumn,
+                    this.timestamptzColumn,
+                    this.xmlColumn
+            );
         }
     }
 
-    public static Builder<Ng, Ng> builder() {
-        return new Builder<>(null, null, null, null);
-    }
-
-    public static DataType build(Builder<Ok, Ok> builder) {
-        return new DataType(
-                builder.id, builder.name, builder.birthday, builder.createdAt
+    public static Builder builder() {
+        return new Builder(
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
         );
     }
 
-    public static DataType build(Function<Builder<Ng, Ng>, Builder<Ok, Ok>> f) {
-        return build(f.apply(builder()));
-    }
-
-    public static class Editor {
-        private Long id;
-        private String name;
-        private Date birthday;
-        private Timestamp createdAt;
-
-        public Editor(final Long id, final String name, final Date birthday, final Timestamp createdAt) {
-            this.id = id;
-            this.name = name;
-            this.birthday = birthday;
-            this.createdAt = createdAt;
-        }
-
-        public Editor id(Long id) {
-            this.id = id;
-            return this;
-        }
-
-        public Editor name(String name) {
-            this.name = name;
-            return this;
-        }
-
-        public Editor birthday(Date birthday) {
-            this.birthday = birthday;
-            return this;
-        }
-
-        public Editor createdAt(Timestamp createdAt) {
-            this.createdAt = createdAt;
-            return this;
-        }
-
-        public DataType edit() {
-            return new DataType(this.id, this.name, this.birthday, this.createdAt);
-        }
-    }
-
-    public Editor editor() {
-        return new Editor(this.id, this.name, this.birthday, this.createdAt);
+    public Builder editor() {
+        return new Builder(
+                this.boolColumn,
+                this.bitColumn,
+                this.int8Column,
+                this.bigserialColumn,
+                this.oidColumn,
+                this.byteaColumn,
+                this.charColumn,
+                this.bpcharColumn,
+                this.numericColumn,
+                this.int4Column,
+                this.serialColumn,
+                this.int2Column,
+                this.smallserialColumn,
+                this.float4Column,
+                this.float8Column,
+                this.moneyColumn,
+                this.nameColumn,
+                this.textColumn,
+                this.varcharColumn,
+                this.dateColumn,
+                this.timeColumn,
+                this.timetzColumn,
+                this.timestampColumn,
+                this.timestamptzColumn,
+                this.xmlColumn
+        );
     }
 }

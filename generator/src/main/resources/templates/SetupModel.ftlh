@@ -8,44 +8,44 @@ import org.example.generated.tables.Tables;
 ${importStatement}
 </#list>
 
-public record ${tableName.upperCamelCaseSingular()}(
+public record ${table.upperCamelCaseSingularName()}(
         <#list columns as column>
-        @ColumnName("${column.name().value()}") ${column.className()} ${column.name().lowerCamelCase()}<#if column_has_next>,</#if>
+        @ColumnName("${column.name()}") ${column.className()} ${column.lowerCamelCaseName()}<#if column_has_next>,</#if>
         </#list>
     ) implements SetupModel {
 
     @Override
     public Tables tableMeta() {
-        return Tables.${tableName.upperCase()};
+        return Tables.${table.upperCaseName()};
     }
 
     public static class Builder {
         <#list columns as column>
-        private ${column.className()} ${column.name().lowerCamelCase()};
+        private ${column.className()} ${column.lowerCamelCaseName()};
         </#list>
 
         public Builder(
                 <#list columns as column>
-                ${column.className()} ${column.name().lowerCamelCase()}<#if column_has_next>,</#if>
+                ${column.className()} ${column.lowerCamelCaseName()}<#if column_has_next>,</#if>
                 </#list>
         ) {
             <#list columns as column>
-            this.${column.name().lowerCamelCase()} = ${column.name().lowerCamelCase()};
+            this.${column.lowerCamelCaseName()} = ${column.lowerCamelCaseName()};
             </#list>
         }
 
         <#list columns as column>
-        public Builder ${column.name().lowerCamelCase()}(final ${column.className()} ${column.name().lowerCamelCase()}) {
-            this.${column.name().lowerCamelCase()} = ${column.name().lowerCamelCase()};
+        public Builder ${column.lowerCamelCaseName()}(final ${column.className()} ${column.lowerCamelCaseName()}) {
+            this.${column.lowerCamelCaseName()} = ${column.lowerCamelCaseName()};
             return this;
         }
 
         </#list>
 
-        public ${tableName.upperCamelCaseSingular()} build() {
-            return new ${tableName.upperCamelCaseSingular()}(
+        public ${table.upperCamelCaseSingularName()} build() {
+            return new ${table.upperCamelCaseSingularName()}(
                 <#list columns as column>
-                this.${column.name().lowerCamelCase()}<#if column_has_next>,</#if>
+                this.${column.lowerCamelCaseName()}<#if column_has_next>,</#if>
                 </#list>
             );
         }
@@ -62,7 +62,7 @@ public record ${tableName.upperCamelCaseSingular()}(
     public Builder editor() {
         return new Builder(
             <#list columns as column>
-            this.${column.name().lowerCamelCase()}<#if column_has_next>,</#if>
+            this.${column.lowerCamelCaseName()}<#if column_has_next>,</#if>
             </#list>
         );
     }
