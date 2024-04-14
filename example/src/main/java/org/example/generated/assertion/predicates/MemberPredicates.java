@@ -47,7 +47,10 @@ public class MemberPredicates {
 
 
         public Predicate<MemberEntity> edit() {
-            return id.and(name.and(birthday.and(createdAt)));
+            return id
+                .and(name)
+                .and(birthday)
+                .and(createdAt);
         }
     }
 
@@ -100,3 +103,4 @@ public class MemberPredicates {
     }
 
 }
+

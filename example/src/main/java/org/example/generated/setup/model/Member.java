@@ -14,7 +14,7 @@ public record Member(
         @ColumnName("name") String name,
         @ColumnName("birthday") Date birthday,
         @ColumnName("created_at") Timestamp createdAt
-) implements SetupModel {
+    ) implements SetupModel {
 
     @Override
     public Tables tableMeta() {
@@ -62,29 +62,29 @@ public record Member(
 
         public Member build() {
             return new Member(
-                    this.id,
-                    this.name,
-                    this.birthday,
-                    this.createdAt
+                this.id,
+                this.name,
+                this.birthday,
+                this.createdAt
             );
         }
     }
 
     public static Builder builder() {
         return new Builder(
-                null,
-                null,
-                null,
-                null
+            null,
+            null,
+            null,
+            null
         );
     }
 
     public Builder editor() {
         return new Builder(
-                this.id,
-                this.name,
-                this.birthday,
-                this.createdAt
+            this.id,
+            this.name,
+            this.birthday,
+            this.createdAt
         );
     }
 }

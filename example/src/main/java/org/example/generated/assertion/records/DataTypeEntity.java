@@ -1,7 +1,17 @@
 package org.example.generated.assertion.records;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.lang.Boolean;
+import java.lang.Double;
+import java.lang.Integer;
+import java.lang.Long;
+import java.lang.Short;
+import java.lang.String;
 import java.math.BigDecimal;
-import java.sql.*;
+import java.sql.Date;
+import java.sql.Time;
+import java.sql.Timestamp;
 
 public record DataTypeEntity(
         Boolean boolColumn,
@@ -17,7 +27,7 @@ public record DataTypeEntity(
         Integer serialColumn,
         Short int2Column,
         Short smallserialColumn,
-        Float float4Column,
+        String float4Column,
         Double float8Column,
         Double moneyColumn,
         String nameColumn,
@@ -28,7 +38,9 @@ public record DataTypeEntity(
         Time timetzColumn,
         Timestamp timestampColumn,
         Timestamp timestamptzColumn,
-        String xmlColumn) {
+        String xmlColumn
+) {
+
     public static DataTypeEntity of(final ResultSet resultSet) {
         try {
             return new DataTypeEntity(
@@ -45,7 +57,7 @@ public record DataTypeEntity(
                     resultSet.getInt("serial_column"),
                     resultSet.getShort("int2_column"),
                     resultSet.getShort("smallserial_column"),
-                    resultSet.getFloat("float4_column"),
+                    resultSet.getString("float4_column"),
                     resultSet.getDouble("float8_column"),
                     resultSet.getDouble("money_column"),
                     resultSet.getString("name_column"),
@@ -63,4 +75,3 @@ public record DataTypeEntity(
         }
     }
 }
-

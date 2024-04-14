@@ -51,7 +51,11 @@ public record Column(
     }
 
     public String getter() {
-        return dataType == DataType.BYTE_ARRAY ? "getBytes" : "get%s".formatted(dataType.getClassName());
+        return switch (dataType) {
+            case DataType.BYTE_ARRAY -> "getBytes";
+            case DataType.INTEGER -> "getInt";
+            default -> "get%s".formatted(dataType.getClassName());
+        };
     }
 
     public Optional<String> fullyQualifiedClassNameOpt() {

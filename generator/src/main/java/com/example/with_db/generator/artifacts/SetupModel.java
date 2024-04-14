@@ -1,39 +1,28 @@
 package com.example.with_db.generator.artifacts;
 
-import com.example.with_db.generator.Column;
 import com.example.with_db.generator.Settings;
 import com.example.with_db.generator.Table;
-import freemarker.template.Template;
 
-import java.io.OutputStreamWriter;
-import java.io.Writer;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.List;
+import java.util.Map;
 
-public class SetupModel {
+public class SetupModel extends AbstractFileWriter {
 
-    public static String generate(final Settings settings, final Table table) {
+    private static final String TEMPLATE = "SetupModel.ftlh";
+    private static final String FILE_NAME_TEMPLATE = "%s.java";
+    private static final List<String> PACKAGES = List.of("setup", "model");
 
-        try {
-            Map<String, Object> root = new HashMap<>();
-            root.put("table", table);
-            root.put("packageName", "%s.setup.model".formatted(settings.basePackage()));
+    public static void generate(final Settings settings, final Table table) {
 
-            final var importStatements = table.usingDataTypes()
-                    .stream().map("import %s;"::formatted).toList();
+        final Map<String, Object> parameter = Map.ofEntries(
+                Map.entry("packageName", packageName(settings.basePackage(), PACKAGES)),
+                Map.entry("table", table),
+                Map.entry("importStatements", importStatements(table)),
+                Map.entry("columns", table.columns()),
+                Map.entry("requiredColumns", table.requiredColumns())
+        );
 
-            root.put("importStatements", importStatements);
-            root.put("columns", table.columns());
-            root.put("requiredColumns", table.requiredColumns());
-
-            Template temp = FreeMarkers.getTemplate("SetupModel.ftlh");
-            Writer out = new OutputStreamWriter(System.out);
-            temp.process(root, out);
-
-        } catch (final Exception e) {
-            throw new RuntimeException(e);
-        }
-
-        return null;
+        final var path = outputPath(FILE_NAME_TEMPLATE.formatted(table.upperCamelCaseSingularName()), settings.outputDirectory(), PACKAGES);
+        writeToFile(TEMPLATE, parameter, path);
     }
 }

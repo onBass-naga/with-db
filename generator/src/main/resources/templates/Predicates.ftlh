@@ -31,7 +31,9 @@ public class ${table.upperCamelCaseSingularName()}Predicates {
         </#list>
 
         public Predicate<${table.upperCamelCaseSingularName()}Entity> edit() {
-            return id.and(name.and(birthday.and(createdAt)));
+            <#list columns as column>
+            <#if column_index == 0>return ${column.lowerCamelCaseName()}<#else>    .and(${column.lowerCamelCaseName()})<#if column_has_next><#else>;</#if></#if>
+            </#list>
         }
     }
 

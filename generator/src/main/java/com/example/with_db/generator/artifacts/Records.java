@@ -2,30 +2,24 @@ package com.example.with_db.generator.artifacts;
 
 import com.example.with_db.generator.Settings;
 import com.example.with_db.generator.Table;
-import freemarker.template.Template;
 
-import java.io.OutputStreamWriter;
-import java.io.Writer;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class Records {
+public class Records extends AbstractFileWriter {
 
-    public static String generate(final Settings settings, final Table table) {
+    private static final String TEMPLATE = "Records.ftlh";
+    private static final String FILE_NAME_TEMPLATE = "%sRecords.java";
+    private static final List<String> PACKAGES = List.of("assertion", "records");
 
-        try {
-            Map<String, Object> root = new HashMap<>();
-            root.put("table", table);
-            root.put("packageName", "%s.assertion.records".formatted(settings.basePackage()));
+    public static void generate(final Settings settings, final Table table) {
 
-            Template temp = FreeMarkers.getTemplate("Records.ftlh");
-            Writer out = new OutputStreamWriter(System.out);
-            temp.process(root, out);
+        final Map<String, Object> parameter = Map.ofEntries(
+                Map.entry("packageName", packageName(settings.basePackage(), PACKAGES)),
+                Map.entry("table", table)
+        );
 
-        } catch (final Exception e) {
-            throw new RuntimeException(e);
-        }
-
-        return null;
+        final var path = outputPath(FILE_NAME_TEMPLATE.formatted(table.upperCamelCaseSingularName()), settings.outputDirectory(), PACKAGES);
+        writeToFile(TEMPLATE, parameter, path);
     }
 }

@@ -16,13 +16,13 @@ public class Generator {
 
             final var tables = tableNames.stream().map(tableName -> createTableModel(tableName, connection)).toList();
 
-//            TablesEnum.generate(settings, tables);
-//            DataSet.generate(settings, tables);
+            TablesEnum.generate(settings, tables);
+            DataSet.generate(settings, tables);
 
             for (var table: tables) {
-//                SetupModel.generate(settings, table);
-//                Entity.generate(settings, table);
-//                Records.generate(settings, table);
+                SetupModel.generate(settings, table);
+                Entity.generate(settings, table);
+                Records.generate(settings, table);
                 Predicates.generate(settings, table);
             }
 
@@ -61,23 +61,6 @@ public class Generator {
         return tableNames;
     }
 
-//    static List<Column> getColumns(Connection connection, String tableName) throws SQLException {
-//
-//        DatabaseMetaData meta = connection.getMetaData();
-//        String catalog = null;
-//        ResultSet result = meta.getColumns(catalog, connection.getSchema(), tableName, "%");
-//
-//        List<Column> columns = new ArrayList<>();
-//        while (result.next()) {
-//            String name = result.getString("COLUMN_NAME");
-//            int dataType = result.getInt("DATA_TYPE");
-//            boolean isNullable = Arrays.asList("YES", "Y").contains(result.getString("IS_NULLABLE"));
-//
-//            columns.add(new Column(name, DataTypes.of(dataType).getTypeName(), isNullable));
-//        }
-//        return columns;
-//    }
-
     private Connection initConnection(Settings settings) throws ClassNotFoundException, SQLException, IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
         String driverClassName = settings.driverClassName();
         Class<?> driver = Class.forName(driverClassName, true, Thread.currentThread().getContextClassLoader());
@@ -102,7 +85,7 @@ public class Generator {
                 null,
                 "postgres",
                 "postgres",
-                "./generated",
+                "./example/src/main/java/org/example/generated",
                 "org.example.generated"
         );
         new Generator().printSetUpModel(settings);

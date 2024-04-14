@@ -41,7 +41,7 @@ public record DataType(
         @ColumnName("timestamp_column") Timestamp timestampColumn,
         @ColumnName("timestamptz_column") Timestamp timestamptzColumn,
         @ColumnName("xml_column") String xmlColumn
-) implements SetupModel {
+    ) implements SetupModel {
 
     @Override
     public Tables tableMeta() {
@@ -257,67 +257,6 @@ public record DataType(
 
         public DataType build() {
             return new DataType(
-                    this.boolColumn,
-                    this.bitColumn,
-                    this.int8Column,
-                    this.bigserialColumn,
-                    this.oidColumn,
-                    this.byteaColumn,
-                    this.charColumn,
-                    this.bpcharColumn,
-                    this.numericColumn,
-                    this.int4Column,
-                    this.serialColumn,
-                    this.int2Column,
-                    this.smallserialColumn,
-                    this.float4Column,
-                    this.float8Column,
-                    this.moneyColumn,
-                    this.nameColumn,
-                    this.textColumn,
-                    this.varcharColumn,
-                    this.dateColumn,
-                    this.timeColumn,
-                    this.timetzColumn,
-                    this.timestampColumn,
-                    this.timestamptzColumn,
-                    this.xmlColumn
-            );
-        }
-    }
-
-    public static Builder builder() {
-        return new Builder(
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-        );
-    }
-
-    public Builder editor() {
-        return new Builder(
                 this.boolColumn,
                 this.bitColumn,
                 this.int8Column,
@@ -343,6 +282,67 @@ public record DataType(
                 this.timestampColumn,
                 this.timestamptzColumn,
                 this.xmlColumn
+            );
+        }
+    }
+
+    public static Builder builder() {
+        return new Builder(
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+        );
+    }
+
+    public Builder editor() {
+        return new Builder(
+            this.boolColumn,
+            this.bitColumn,
+            this.int8Column,
+            this.bigserialColumn,
+            this.oidColumn,
+            this.byteaColumn,
+            this.charColumn,
+            this.bpcharColumn,
+            this.numericColumn,
+            this.int4Column,
+            this.serialColumn,
+            this.int2Column,
+            this.smallserialColumn,
+            this.float4Column,
+            this.float8Column,
+            this.moneyColumn,
+            this.nameColumn,
+            this.textColumn,
+            this.varcharColumn,
+            this.dateColumn,
+            this.timeColumn,
+            this.timetzColumn,
+            this.timestampColumn,
+            this.timestamptzColumn,
+            this.xmlColumn
         );
     }
 }

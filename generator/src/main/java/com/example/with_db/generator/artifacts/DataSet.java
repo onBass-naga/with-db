@@ -2,30 +2,24 @@ package com.example.with_db.generator.artifacts;
 
 import com.example.with_db.generator.Settings;
 import com.example.with_db.generator.Table;
-import freemarker.template.Template;
 
-import java.io.OutputStreamWriter;
-import java.io.Writer;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class DataSet {
-    public static String generate(final Settings settings, final List<Table> tables) {
+public class DataSet extends AbstractFileWriter {
 
-        try {
-            Map<String, Object> root = new HashMap<>();
-            root.put("tables", tables);
-            root.put("packageName", "%s.assertion".formatted(settings.basePackage()));
+    private static final String TEMPLATE = "DataSet.ftlh";
+    private static final String FILE_NAME = "DataSet.java";
+    private static final List<String> PACKAGES = List.of("assertion");
 
-            Template temp = FreeMarkers.getTemplate("DataSet.ftlh");
-            Writer out = new OutputStreamWriter(System.out);
-            temp.process(root, out);
+    public static void generate(final Settings settings, final List<Table> tables) {
 
-        } catch (final Exception e) {
-            throw new RuntimeException(e);
-        }
+        final Map<String, Object> parameter = Map.ofEntries(
+                Map.entry("packageName", packageName(settings.basePackage(), PACKAGES)),
+                Map.entry("tables", tables)
+        );
 
-        return null;
+        final var path = outputPath(FILE_NAME, settings.outputDirectory(), PACKAGES);
+        writeToFile(TEMPLATE, parameter, path);
     }
 }
