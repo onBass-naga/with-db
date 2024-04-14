@@ -1,4 +1,4 @@
-package com.example.with_db.generator;
+package com.example.with_db.generator.model;
 
 import org.modeshape.common.text.Inflector;
 

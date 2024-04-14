@@ -1,8 +1,8 @@
 package com.example.with_db.generator.artifacts;
 
-import com.example.with_db.generator.Column;
+import com.example.with_db.generator.model.Column;
 import com.example.with_db.generator.settings.Settings;
-import com.example.with_db.generator.Table;
+import com.example.with_db.generator.model.Table;
 
 import java.util.List;
 import java.util.Map;

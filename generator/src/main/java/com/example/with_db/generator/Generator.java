@@ -1,6 +1,8 @@
 package com.example.with_db.generator;
 
 import com.example.with_db.generator.artifacts.*;
+import com.example.with_db.generator.model.Column;
+import com.example.with_db.generator.model.Table;
 import com.example.with_db.generator.settings.Settings;
 
 import java.lang.reflect.InvocationTargetException;

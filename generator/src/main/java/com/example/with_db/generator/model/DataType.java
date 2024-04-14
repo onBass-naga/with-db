@@ -1,4 +1,4 @@
-package com.example.with_db.generator;
+package com.example.with_db.generator.model;
 
 import java.math.BigDecimal;
 import java.sql.Date;

@@ -1,6 +1,6 @@
 package com.example.with_db.generator.artifacts;
 
-import com.example.with_db.generator.Table;
+import com.example.with_db.generator.model.Table;
 import freemarker.template.Template;
 
 import java.io.*;
