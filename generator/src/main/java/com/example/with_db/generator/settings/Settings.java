@@ -1,4 +1,4 @@
-package com.example.with_db.generator;
+package com.example.with_db.generator.settings;
 
 public record Settings(
         String driverClassName,

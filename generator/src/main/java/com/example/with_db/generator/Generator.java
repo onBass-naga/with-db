@@ -1,6 +1,7 @@
 package com.example.with_db.generator;
 
 import com.example.with_db.generator.artifacts.*;
+import com.example.with_db.generator.settings.Settings;
 
 import java.lang.reflect.InvocationTargetException;
 import java.sql.*;
@@ -9,7 +10,7 @@ import java.util.List;
 
 public class Generator {
 
-    public void printSetUpModel(final Settings settings) {
+    public void execute(final Settings settings) {
 
         try (var connection = initConnection(settings)) {
             final var tableNames = getTableNames(connection);
@@ -76,19 +77,5 @@ public class Generator {
         }
 
         return conn;
-    }
-
-    public static void main(String[] args) {
-        final var settings = new Settings(
-                "org.postgresql.Driver",
-                "jdbc:postgresql://localhost:5432/sample",
-                null,
-                "postgres",
-                "postgres",
-                "./example/src/main/java/org/example/generated",
-                "org.example.generated",
-                "Sample"
-        );
-        new Generator().printSetUpModel(settings);
     }
 }
