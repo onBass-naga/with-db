@@ -1,6 +1,6 @@
 package com.example.with_db.generator.model;
 
-import org.modeshape.common.text.Inflector;
+import com.example.with_db.generator.utils.Inflector;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
