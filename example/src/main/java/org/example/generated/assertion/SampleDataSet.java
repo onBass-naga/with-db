@@ -13,7 +13,7 @@ import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
-public class DataSet {
+public class SampleDataSet {
 
     private enum TABLE_SETTERS {
         DATA_TYPES("data_types",
@@ -24,11 +24,11 @@ public class DataSet {
                 MemberEntity::of);
 
         private final String tableName;
-        private final BiConsumer<DataSet, List<Object>> setter;
+        private final BiConsumer<SampleDataSet, List<Object>> setter;
         private final Function<ResultSet, Object> converter;
 
         TABLE_SETTERS(final String tableName,
-                      final BiConsumer<DataSet, List<Object>> setter,
+                      final BiConsumer<SampleDataSet, List<Object>> setter,
                       final Function<ResultSet, Object> converter) {
             this.tableName = tableName;
             this.setter = setter;
@@ -51,14 +51,14 @@ public class DataSet {
     }
 
 
-    public static DataSet load(final Connection connection, final Table... tables) {
+    public static SampleDataSet load(final Connection connection, final Table... tables) {
         return load(connection, List.of(tables));
     }
 
-    public static DataSet load(final Connection connection, final List<Table> tables) {
+    public static SampleDataSet load(final Connection connection, final List<Table> tables) {
 
         final var targetTableNames = tables.stream().map(Table::tableName).toList();
-        final var dataSet = new DataSet();
+        final var dataSet = new SampleDataSet();
 
         for (final var tableSetter : TABLE_SETTERS.values()) {
 

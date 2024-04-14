@@ -86,7 +86,8 @@ public class Generator {
                 "postgres",
                 "postgres",
                 "./example/src/main/java/org/example/generated",
-                "org.example.generated"
+                "org.example.generated",
+                "Sample"
         );
         new Generator().printSetUpModel(settings);
     }

@@ -1,6 +1,6 @@
 package com.example.with_db;
 
-import org.example.generated.assertion.DataSet;
+import org.example.generated.assertion.SampleDataSet;
 import com.example.with_db.operation.InsertOperation;
 import com.example.with_db.operation.TruncateOperation;
 import com.example.with_db.assertion.predicates.CommonPredicates;
@@ -45,7 +45,7 @@ public class SampleTest {
 
         InsertOperation.execute(con, member, member2, member3, member4);
 
-        final var dataSet = DataSet.load(con, Tables.MEMBERS);
+        final var dataSet = SampleDataSet.load(con, Tables.MEMBERS);
         final var members = dataSet.members();
 
         Assertions.assertEquals(4, members.count());
@@ -82,7 +82,7 @@ public class SampleTest {
                 "postgres",
                 "postgres");
 
-        final var dataSet = DataSet.load(con, Tables.DATA_TYPES);
+        final var dataSet = SampleDataSet.load(con, Tables.DATA_TYPES);
         System.out.println(dataSet.dataTypes());
     }
 }
