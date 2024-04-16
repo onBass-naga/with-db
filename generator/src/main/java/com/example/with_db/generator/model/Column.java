@@ -53,7 +53,6 @@ public record Column(
     public String getter() {
         return switch (dataType) {
             case DataType.BYTE_ARRAY -> "getBytes";
-            case DataType.INTEGER -> "getInt";
             default -> "get%s".formatted(dataType.getClassName());
         };
     }

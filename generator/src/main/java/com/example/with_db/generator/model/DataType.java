@@ -1,10 +1,8 @@
 package com.example.with_db.generator.model;
 
 import java.math.BigDecimal;
-import java.sql.Date;
-import java.sql.Time;
-import java.sql.Timestamp;
 import java.sql.Types;
+import java.time.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -19,9 +17,11 @@ public enum DataType {
     BIG_DECIMAL(BigDecimal.class, "BigDecimal", List.of(Types.NUMERIC, Types.DECIMAL)),
     BOOLEAN(Boolean.class, "Boolean", List.of(Types.BIT, Types.BOOLEAN)),
     BYTE_ARRAY(null, "byte[]", List.of(Types.BINARY)),
-    DATE(Date.class, "Date", List.of(Types.DATE)),
-    TIME(Time.class, "Time", List.of(Types.TIME, Types.TIME_WITH_TIMEZONE)),
-    TIMESTAMP(Timestamp.class, "Timestamp", List.of(Types.TIMESTAMP, Types.TIMESTAMP_WITH_TIMEZONE));
+    DATE(LocalDate.class, "LocalDate", List.of(Types.DATE)),
+    TIME(LocalTime.class, "LocalTime", List.of(Types.TIME)),
+    TIMESTAMP(LocalDateTime.class, "LocalDateTime", List.of(Types.TIMESTAMP)),
+    TIME_WITH_TIMEZONE(OffsetTime.class, "OffsetTime", List.of(Types.TIME_WITH_TIMEZONE)),
+    TIMESTAMP_WITH_TIMEZONE(OffsetDateTime.class, "OffsetDateTime", List.of(Types.TIMESTAMP_WITH_TIMEZONE));
 
     private final Class<?> clazz;
 

@@ -12,9 +12,9 @@ import java.lang.Long;
 import java.lang.Short;
 import java.lang.String;
 import java.math.BigDecimal;
-import java.sql.Date;
-import java.sql.Time;
-import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class DataTypePredicates {
 
@@ -168,27 +168,27 @@ public class DataTypePredicates {
             return this;
         }
 
-        public Editor dateColumn(final Predicate<Date> predicate) {
+        public Editor dateColumn(final Predicate<LocalDate> predicate) {
             this.dateColumn = DataTypePredicates.dateColumn(predicate);
             return this;
         }
 
-        public Editor timeColumn(final Predicate<Time> predicate) {
+        public Editor timeColumn(final Predicate<LocalTime> predicate) {
             this.timeColumn = DataTypePredicates.timeColumn(predicate);
             return this;
         }
 
-        public Editor timetzColumn(final Predicate<Time> predicate) {
+        public Editor timetzColumn(final Predicate<LocalTime> predicate) {
             this.timetzColumn = DataTypePredicates.timetzColumn(predicate);
             return this;
         }
 
-        public Editor timestampColumn(final Predicate<Timestamp> predicate) {
+        public Editor timestampColumn(final Predicate<LocalDateTime> predicate) {
             this.timestampColumn = DataTypePredicates.timestampColumn(predicate);
             return this;
         }
 
-        public Editor timestamptzColumn(final Predicate<Timestamp> predicate) {
+        public Editor timestamptzColumn(final Predicate<LocalDateTime> predicate) {
             this.timestamptzColumn = DataTypePredicates.timestamptzColumn(predicate);
             return this;
         }
@@ -388,64 +388,44 @@ public class DataTypePredicates {
         return (entity) -> Objects.equals(entity.varcharColumn(), varcharColumn);
     }
 
-    public static Predicate<DataTypeEntity> dateColumn(final Predicate<Date> predicate) {
+    public static Predicate<DataTypeEntity> dateColumn(final Predicate<LocalDate> predicate) {
         return (entity) -> predicate.test(entity.dateColumn());
     }
 
-    public static Predicate<DataTypeEntity> dateColumn(final Date dateColumn) {
+    public static Predicate<DataTypeEntity> dateColumn(final LocalDate dateColumn) {
         return (entity) -> Objects.equals(entity.dateColumn(), dateColumn);
     }
 
-    public static Predicate<DataTypeEntity> dateColumn(final String dateColumn) {
-        return (entity) -> Objects.equals(entity.dateColumn(), Date.valueOf(dateColumn));
-    }
-
-    public static Predicate<DataTypeEntity> timeColumn(final Predicate<Time> predicate) {
+    public static Predicate<DataTypeEntity> timeColumn(final Predicate<LocalTime> predicate) {
         return (entity) -> predicate.test(entity.timeColumn());
     }
 
-    public static Predicate<DataTypeEntity> timeColumn(final Time timeColumn) {
+    public static Predicate<DataTypeEntity> timeColumn(final LocalTime timeColumn) {
         return (entity) -> Objects.equals(entity.timeColumn(), timeColumn);
     }
 
-    public static Predicate<DataTypeEntity> timeColumn(final String timeColumn) {
-        return (entity) -> Objects.equals(entity.timeColumn(), Time.valueOf(timeColumn));
-    }
-
-    public static Predicate<DataTypeEntity> timetzColumn(final Predicate<Time> predicate) {
+    public static Predicate<DataTypeEntity> timetzColumn(final Predicate<LocalTime> predicate) {
         return (entity) -> predicate.test(entity.timetzColumn());
     }
 
-    public static Predicate<DataTypeEntity> timetzColumn(final Time timetzColumn) {
+    public static Predicate<DataTypeEntity> timetzColumn(final LocalTime timetzColumn) {
         return (entity) -> Objects.equals(entity.timetzColumn(), timetzColumn);
     }
 
-    public static Predicate<DataTypeEntity> timetzColumn(final String timetzColumn) {
-        return (entity) -> Objects.equals(entity.timetzColumn(), Time.valueOf(timetzColumn));
-    }
-
-    public static Predicate<DataTypeEntity> timestampColumn(final Predicate<Timestamp> predicate) {
+    public static Predicate<DataTypeEntity> timestampColumn(final Predicate<LocalDateTime> predicate) {
         return (entity) -> predicate.test(entity.timestampColumn());
     }
 
-    public static Predicate<DataTypeEntity> timestampColumn(final Timestamp timestampColumn) {
+    public static Predicate<DataTypeEntity> timestampColumn(final LocalDateTime timestampColumn) {
         return (entity) -> Objects.equals(entity.timestampColumn(), timestampColumn);
     }
 
-    public static Predicate<DataTypeEntity> timestampColumn(final String timestampColumn) {
-        return (entity) -> Objects.equals(entity.timestampColumn(), Timestamp.valueOf(timestampColumn));
-    }
-
-    public static Predicate<DataTypeEntity> timestamptzColumn(final Predicate<Timestamp> predicate) {
+    public static Predicate<DataTypeEntity> timestamptzColumn(final Predicate<LocalDateTime> predicate) {
         return (entity) -> predicate.test(entity.timestamptzColumn());
     }
 
-    public static Predicate<DataTypeEntity> timestamptzColumn(final Timestamp timestamptzColumn) {
+    public static Predicate<DataTypeEntity> timestamptzColumn(final LocalDateTime timestamptzColumn) {
         return (entity) -> Objects.equals(entity.timestamptzColumn(), timestamptzColumn);
-    }
-
-    public static Predicate<DataTypeEntity> timestamptzColumn(final String timestamptzColumn) {
-        return (entity) -> Objects.equals(entity.timestamptzColumn(), Timestamp.valueOf(timestamptzColumn));
     }
 
     public static Predicate<DataTypeEntity> xmlColumn(final Predicate<String> predicate) {

@@ -1,5 +1,6 @@
 package org.example.generated.assertion;
 
+import com.example.with_db.database.ResultSetWrapper;
 import com.example.with_db.database.Table;
 import org.example.generated.assertion.records.DataTypeEntity;
 import org.example.generated.assertion.records.DataTypeRecords;
@@ -7,7 +8,6 @@ import org.example.generated.assertion.records.MemberEntity;
 import org.example.generated.assertion.records.MemberRecords;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 import java.util.function.BiConsumer;
@@ -25,11 +25,11 @@ public class SampleDataSet {
 
         private final String tableName;
         private final BiConsumer<SampleDataSet, List<Object>> setter;
-        private final Function<ResultSet, Object> converter;
+        private final Function<ResultSetWrapper, Object> converter;
 
         TABLE_SETTERS(final String tableName,
                       final BiConsumer<SampleDataSet, List<Object>> setter,
-                      final Function<ResultSet, Object> converter) {
+                      final Function<ResultSetWrapper, Object> converter) {
             this.tableName = tableName;
             this.setter = setter;
             this.converter = converter;
@@ -69,7 +69,7 @@ public class SampleDataSet {
             try {
                 final var stmt = connection.createStatement();
                 final var sql = "SELECT * FROM %s".formatted(tableSetter.tableName);
-                final var resultSet = stmt.executeQuery(sql);
+                final var resultSet = new ResultSetWrapper(stmt.executeQuery(sql));
 
                 final List<Object> records = new ArrayList<>();
                 while (resultSet.next()) {

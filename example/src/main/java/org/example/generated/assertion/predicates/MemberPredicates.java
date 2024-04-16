@@ -7,8 +7,8 @@ import java.util.Objects;
 import java.util.function.Predicate;
 import java.lang.Long;
 import java.lang.String;
-import java.sql.Date;
-import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class MemberPredicates {
 
@@ -35,12 +35,12 @@ public class MemberPredicates {
             return this;
         }
 
-        public Editor birthday(final Predicate<Date> predicate) {
+        public Editor birthday(final Predicate<LocalDate> predicate) {
             this.birthday = MemberPredicates.birthday(predicate);
             return this;
         }
 
-        public Editor createdAt(final Predicate<Timestamp> predicate) {
+        public Editor createdAt(final Predicate<LocalDateTime> predicate) {
             this.createdAt = MemberPredicates.createdAt(predicate);
             return this;
         }
@@ -78,28 +78,20 @@ public class MemberPredicates {
         return (entity) -> Objects.equals(entity.name(), name);
     }
 
-    public static Predicate<MemberEntity> birthday(final Predicate<Date> predicate) {
+    public static Predicate<MemberEntity> birthday(final Predicate<LocalDate> predicate) {
         return (entity) -> predicate.test(entity.birthday());
     }
 
-    public static Predicate<MemberEntity> birthday(final Date birthday) {
+    public static Predicate<MemberEntity> birthday(final LocalDate birthday) {
         return (entity) -> Objects.equals(entity.birthday(), birthday);
     }
 
-    public static Predicate<MemberEntity> birthday(final String birthday) {
-        return (entity) -> Objects.equals(entity.birthday(), Date.valueOf(birthday));
-    }
-
-    public static Predicate<MemberEntity> createdAt(final Predicate<Timestamp> predicate) {
+    public static Predicate<MemberEntity> createdAt(final Predicate<LocalDateTime> predicate) {
         return (entity) -> predicate.test(entity.createdAt());
     }
 
-    public static Predicate<MemberEntity> createdAt(final Timestamp createdAt) {
+    public static Predicate<MemberEntity> createdAt(final LocalDateTime createdAt) {
         return (entity) -> Objects.equals(entity.createdAt(), createdAt);
-    }
-
-    public static Predicate<MemberEntity> createdAt(final String createdAt) {
-        return (entity) -> Objects.equals(entity.createdAt(), Timestamp.valueOf(createdAt));
     }
 
 }

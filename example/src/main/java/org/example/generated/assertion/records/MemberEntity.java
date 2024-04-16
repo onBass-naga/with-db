@@ -1,29 +1,24 @@
 package org.example.generated.assertion.records;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import com.example.with_db.database.ResultSetWrapper;
 import java.lang.Long;
 import java.lang.String;
-import java.sql.Date;
-import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public record MemberEntity(
         Long id,
         String name,
-        Date birthday,
-        Timestamp createdAt
+        LocalDate birthday,
+        LocalDateTime createdAt
 ) {
 
-    public static MemberEntity of(final ResultSet resultSet) {
-        try {
-            return new MemberEntity(
-                    resultSet.getLong("id"),
-                    resultSet.getString("name"),
-                    resultSet.getDate("birthday"),
-                    resultSet.getTimestamp("created_at")
-            );
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    public static MemberEntity of(final ResultSetWrapper resultSet) {
+        return new MemberEntity(
+                resultSet.getLong("id"),
+                resultSet.getString("name"),
+                resultSet.getLocalDate("birthday"),
+                resultSet.getLocalDateTime("created_at")
+        );
     }
 }

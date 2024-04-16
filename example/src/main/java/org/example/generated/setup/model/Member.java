@@ -6,14 +6,14 @@ import org.example.generated.tables.Tables;
 
 import java.lang.Long;
 import java.lang.String;
-import java.sql.Date;
-import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public record Member(
         @ColumnName("id") Long id,
         @ColumnName("name") String name,
-        @ColumnName("birthday") Date birthday,
-        @ColumnName("created_at") Timestamp createdAt
+        @ColumnName("birthday") LocalDate birthday,
+        @ColumnName("created_at") LocalDateTime createdAt
     ) implements SetupModel {
 
     @Override
@@ -24,14 +24,14 @@ public record Member(
     public static class Builder {
         private Long id;
         private String name;
-        private Date birthday;
-        private Timestamp createdAt;
+        private LocalDate birthday;
+        private LocalDateTime createdAt;
 
         public Builder(
                 Long id,
                 String name,
-                Date birthday,
-                Timestamp createdAt
+                LocalDate birthday,
+                LocalDateTime createdAt
         ) {
             this.id = id;
             this.name = name;
@@ -49,12 +49,12 @@ public record Member(
             return this;
         }
 
-        public Builder birthday(final Date birthday) {
+        public Builder birthday(final LocalDate birthday) {
             this.birthday = birthday;
             return this;
         }
 
-        public Builder createdAt(final Timestamp createdAt) {
+        public Builder createdAt(final LocalDateTime createdAt) {
             this.createdAt = createdAt;
             return this;
         }

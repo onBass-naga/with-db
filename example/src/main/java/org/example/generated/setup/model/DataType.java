@@ -11,9 +11,9 @@ import java.lang.Long;
 import java.lang.Short;
 import java.lang.String;
 import java.math.BigDecimal;
-import java.sql.Date;
-import java.sql.Time;
-import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public record DataType(
         @ColumnName("bool_column") Boolean boolColumn,
@@ -35,11 +35,11 @@ public record DataType(
         @ColumnName("name_column") String nameColumn,
         @ColumnName("text_column") String textColumn,
         @ColumnName("varchar_column") String varcharColumn,
-        @ColumnName("date_column") Date dateColumn,
-        @ColumnName("time_column") Time timeColumn,
-        @ColumnName("timetz_column") Time timetzColumn,
-        @ColumnName("timestamp_column") Timestamp timestampColumn,
-        @ColumnName("timestamptz_column") Timestamp timestamptzColumn,
+        @ColumnName("date_column") LocalDate dateColumn,
+        @ColumnName("time_column") LocalTime timeColumn,
+        @ColumnName("timetz_column") LocalTime timetzColumn,
+        @ColumnName("timestamp_column") LocalDateTime timestampColumn,
+        @ColumnName("timestamptz_column") LocalDateTime timestamptzColumn,
         @ColumnName("xml_column") String xmlColumn
     ) implements SetupModel {
 
@@ -68,11 +68,11 @@ public record DataType(
         private String nameColumn;
         private String textColumn;
         private String varcharColumn;
-        private Date dateColumn;
-        private Time timeColumn;
-        private Time timetzColumn;
-        private Timestamp timestampColumn;
-        private Timestamp timestamptzColumn;
+        private LocalDate dateColumn;
+        private LocalTime timeColumn;
+        private LocalTime timetzColumn;
+        private LocalDateTime timestampColumn;
+        private LocalDateTime timestamptzColumn;
         private String xmlColumn;
 
         public Builder(
@@ -95,11 +95,11 @@ public record DataType(
                 String nameColumn,
                 String textColumn,
                 String varcharColumn,
-                Date dateColumn,
-                Time timeColumn,
-                Time timetzColumn,
-                Timestamp timestampColumn,
-                Timestamp timestamptzColumn,
+                LocalDate dateColumn,
+                LocalTime timeColumn,
+                LocalTime timetzColumn,
+                LocalDateTime timestampColumn,
+                LocalDateTime timestamptzColumn,
                 String xmlColumn
         ) {
             this.boolColumn = boolColumn;
@@ -224,27 +224,27 @@ public record DataType(
             return this;
         }
 
-        public Builder dateColumn(final Date dateColumn) {
+        public Builder dateColumn(final LocalDate dateColumn) {
             this.dateColumn = dateColumn;
             return this;
         }
 
-        public Builder timeColumn(final Time timeColumn) {
+        public Builder timeColumn(final LocalTime timeColumn) {
             this.timeColumn = timeColumn;
             return this;
         }
 
-        public Builder timetzColumn(final Time timetzColumn) {
+        public Builder timetzColumn(final LocalTime timetzColumn) {
             this.timetzColumn = timetzColumn;
             return this;
         }
 
-        public Builder timestampColumn(final Timestamp timestampColumn) {
+        public Builder timestampColumn(final LocalDateTime timestampColumn) {
             this.timestampColumn = timestampColumn;
             return this;
         }
 
-        public Builder timestamptzColumn(final Timestamp timestamptzColumn) {
+        public Builder timestamptzColumn(final LocalDateTime timestamptzColumn) {
             this.timestamptzColumn = timestamptzColumn;
             return this;
         }
