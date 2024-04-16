@@ -1,5 +1,6 @@
 package com.example.with_db.operation;
 
+import com.example.with_db.database.PreparedStatementWrapper;
 import com.example.with_db.utils.ReflectionUtils;
 import com.example.with_db.database.SetupModel;
 import com.example.with_db.database.column.ColumnName;
@@ -59,19 +60,15 @@ public class InsertOperation {
                 "VALUES " +
                 "(%s);".formatted(String.join(", ", placeholders));
 
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            final var ps = new PreparedStatementWrapper(preparedStatement);
             for (int i = 0; i < values.size(); i++) {
-                Object value = values.get(i);
-                if (value != null) {
-                    ps.setObject(i + 1, value);
-                } else {
-                    final var metaData = ps.getParameterMetaData();
-                    int type = metaData.getParameterType(i + 1);
-                    ps.setNull(i + 1, type);
-                }
+                ps.setValue(i, values.get(i));
             }
 
             ps.executeUpdate();
+
         } catch (final SQLException e) {
             throw new RuntimeException(e);
         }
