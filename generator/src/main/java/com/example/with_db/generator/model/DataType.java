@@ -28,6 +28,13 @@ public enum DataType {
     private final String javaClassName;
     private final List<Integer> sqlTypes;
 
+    private static final List<Class<?>> DATE_TIME_TYPES = List.of(
+            LocalDateTime.class,
+            LocalDate.class,
+            LocalTime.class,
+            OffsetDateTime.class,
+            OffsetTime.class);
+
     DataType(Class<?> clazz, String javaClassName, List<Integer> sqlTypes) {
         this.clazz = clazz;
         this.javaClassName = javaClassName;
@@ -47,5 +54,9 @@ public enum DataType {
 
     public String getClassName() {
         return javaClassName;
+    }
+
+    public boolean isTimeModule() {
+        return clazz != null && DATE_TIME_TYPES.contains(clazz);
     }
 }

@@ -40,6 +40,54 @@ public record ${table.upperCamelCaseSingularName()}(
             return this;
         }
 
+        <#if !column.isRequired()>
+        public Builder ${column.lowerCamelCaseName()}Null() {
+            this.${column.lowerCamelCaseName()} = null;
+            return this;
+        }
+
+        </#if>
+        <#if column.isTimeModule()>
+        public Builder ${column.lowerCamelCaseName()}(final String ${column.lowerCamelCaseName()}) {
+            this.${column.lowerCamelCaseName()} = ${column.className()}.parse(${column.lowerCamelCaseName()});
+            return this;
+        }
+
+        </#if>
+        <#if column.className() == "Long">
+        public Builder ${column.lowerCamelCaseName()}(final int ${column.lowerCamelCaseName()}) {
+            this.${column.lowerCamelCaseName()} = (long) ${column.lowerCamelCaseName()};
+            return this;
+        }
+
+        </#if>
+        <#if column.className() == "Short">
+        public Builder ${column.lowerCamelCaseName()}(final int ${column.lowerCamelCaseName()}) {
+            if (${column.lowerCamelCaseName()} > Short.MAX_VALUE || ${column.lowerCamelCaseName()} < Short.MIN_VALUE) {
+                throw new IllegalArgumentException("out of range: " + ${column.lowerCamelCaseName()});
+            }
+            this.${column.lowerCamelCaseName()} = (short) ${column.lowerCamelCaseName()};
+            return this;
+        }
+
+        </#if>
+        <#if column.className() == "BigDecimal">
+        public Builder ${column.lowerCamelCaseName()}(final int ${column.lowerCamelCaseName()}) {
+            this.${column.lowerCamelCaseName()} = BigDecimal.valueOf(${column.lowerCamelCaseName()});
+            return this;
+        }
+
+        public Builder ${column.lowerCamelCaseName()}(final long ${column.lowerCamelCaseName()}) {
+            this.${column.lowerCamelCaseName()} = BigDecimal.valueOf(${column.lowerCamelCaseName()});
+            return this;
+        }
+
+        public Builder ${column.lowerCamelCaseName()}(final double ${column.lowerCamelCaseName()}) {
+            this.${column.lowerCamelCaseName()} = BigDecimal.valueOf(${column.lowerCamelCaseName()});
+            return this;
+        }
+
+        </#if>
         </#list>
 
         public ${table.upperCamelCaseSingularName()} build() {

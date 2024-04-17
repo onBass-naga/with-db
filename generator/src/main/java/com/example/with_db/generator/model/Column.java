@@ -68,4 +68,8 @@ public record Column(
     public String requiredText() {
         return String.valueOf(isRequired());
     }
+
+    public boolean isTimeModule() {
+        return dataType.isTimeModule();
+    }
 }

@@ -44,6 +44,11 @@ public record Member(
             return this;
         }
 
+        public Builder id(final int id) {
+            this.id = (long) id;
+            return this;
+        }
+
         public Builder name(final String name) {
             this.name = name;
             return this;
@@ -54,8 +59,28 @@ public record Member(
             return this;
         }
 
+        public Builder birthdayNull() {
+            this.birthday = null;
+            return this;
+        }
+
+        public Builder birthday(final String birthday) {
+            this.birthday = LocalDate.parse(birthday);
+            return this;
+        }
+
         public Builder createdAt(final LocalDateTime createdAt) {
             this.createdAt = createdAt;
+            return this;
+        }
+
+        public Builder createdAtNull() {
+            this.createdAt = null;
+            return this;
+        }
+
+        public Builder createdAt(final String createdAt) {
+            this.createdAt = LocalDateTime.parse(createdAt);
             return this;
         }
 

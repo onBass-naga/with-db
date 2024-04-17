@@ -134,8 +134,18 @@ public record DataType(
             return this;
         }
 
+        public Builder boolColumnNull() {
+            this.boolColumn = null;
+            return this;
+        }
+
         public Builder bitColumn(final Boolean bitColumn) {
             this.bitColumn = bitColumn;
+            return this;
+        }
+
+        public Builder bitColumnNull() {
+            this.bitColumn = null;
             return this;
         }
 
@@ -144,8 +154,28 @@ public record DataType(
             return this;
         }
 
+        public Builder int8ColumnNull() {
+            this.int8Column = null;
+            return this;
+        }
+
+        public Builder int8Column(final int int8Column) {
+            this.int8Column = (long) int8Column;
+            return this;
+        }
+
         public Builder bigserialColumn(final Long bigserialColumn) {
             this.bigserialColumn = bigserialColumn;
+            return this;
+        }
+
+        public Builder bigserialColumnNull() {
+            this.bigserialColumn = null;
+            return this;
+        }
+
+        public Builder bigserialColumn(final int bigserialColumn) {
+            this.bigserialColumn = (long) bigserialColumn;
             return this;
         }
 
@@ -154,8 +184,23 @@ public record DataType(
             return this;
         }
 
+        public Builder oidColumnNull() {
+            this.oidColumn = null;
+            return this;
+        }
+
+        public Builder oidColumn(final int oidColumn) {
+            this.oidColumn = (long) oidColumn;
+            return this;
+        }
+
         public Builder byteaColumn(final byte[] byteaColumn) {
             this.byteaColumn = byteaColumn;
+            return this;
+        }
+
+        public Builder byteaColumnNull() {
+            this.byteaColumn = null;
             return this;
         }
 
@@ -164,8 +209,18 @@ public record DataType(
             return this;
         }
 
+        public Builder charColumnNull() {
+            this.charColumn = null;
+            return this;
+        }
+
         public Builder bpcharColumn(final String bpcharColumn) {
             this.bpcharColumn = bpcharColumn;
+            return this;
+        }
+
+        public Builder bpcharColumnNull() {
+            this.bpcharColumn = null;
             return this;
         }
 
@@ -174,8 +229,33 @@ public record DataType(
             return this;
         }
 
+        public Builder numericColumnNull() {
+            this.numericColumn = null;
+            return this;
+        }
+
+        public Builder numericColumn(final int numericColumn) {
+            this.numericColumn = BigDecimal.valueOf(numericColumn);
+            return this;
+        }
+
+        public Builder numericColumn(final long numericColumn) {
+            this.numericColumn = BigDecimal.valueOf(numericColumn);
+            return this;
+        }
+
+        public Builder numericColumn(final double numericColumn) {
+            this.numericColumn = BigDecimal.valueOf(numericColumn);
+            return this;
+        }
+
         public Builder int4Column(final Integer int4Column) {
             this.int4Column = int4Column;
+            return this;
+        }
+
+        public Builder int4ColumnNull() {
+            this.int4Column = null;
             return this;
         }
 
@@ -184,8 +264,26 @@ public record DataType(
             return this;
         }
 
+        public Builder serialColumnNull() {
+            this.serialColumn = null;
+            return this;
+        }
+
         public Builder int2Column(final Short int2Column) {
             this.int2Column = int2Column;
+            return this;
+        }
+
+        public Builder int2ColumnNull() {
+            this.int2Column = null;
+            return this;
+        }
+
+        public Builder int2Column(final int int2Column) {
+            if (int2Column > Short.MAX_VALUE || int2Column < Short.MIN_VALUE) {
+                throw new IllegalArgumentException("out of range: " + int2Column);
+            }
+            this.int2Column = (short) int2Column;
             return this;
         }
 
@@ -194,8 +292,26 @@ public record DataType(
             return this;
         }
 
+        public Builder smallserialColumnNull() {
+            this.smallserialColumn = null;
+            return this;
+        }
+
+        public Builder smallserialColumn(final int smallserialColumn) {
+            if (smallserialColumn > Short.MAX_VALUE || smallserialColumn < Short.MIN_VALUE) {
+                throw new IllegalArgumentException("out of range: " + smallserialColumn);
+            }
+            this.smallserialColumn = (short) smallserialColumn;
+            return this;
+        }
+
         public Builder float4Column(final String float4Column) {
             this.float4Column = float4Column;
+            return this;
+        }
+
+        public Builder float4ColumnNull() {
+            this.float4Column = null;
             return this;
         }
 
@@ -204,8 +320,18 @@ public record DataType(
             return this;
         }
 
+        public Builder float8ColumnNull() {
+            this.float8Column = null;
+            return this;
+        }
+
         public Builder moneyColumn(final Double moneyColumn) {
             this.moneyColumn = moneyColumn;
+            return this;
+        }
+
+        public Builder moneyColumnNull() {
+            this.moneyColumn = null;
             return this;
         }
 
@@ -214,8 +340,18 @@ public record DataType(
             return this;
         }
 
+        public Builder nameColumnNull() {
+            this.nameColumn = null;
+            return this;
+        }
+
         public Builder textColumn(final String textColumn) {
             this.textColumn = textColumn;
+            return this;
+        }
+
+        public Builder textColumnNull() {
+            this.textColumn = null;
             return this;
         }
 
@@ -224,8 +360,23 @@ public record DataType(
             return this;
         }
 
+        public Builder varcharColumnNull() {
+            this.varcharColumn = null;
+            return this;
+        }
+
         public Builder dateColumn(final LocalDate dateColumn) {
             this.dateColumn = dateColumn;
+            return this;
+        }
+
+        public Builder dateColumnNull() {
+            this.dateColumn = null;
+            return this;
+        }
+
+        public Builder dateColumn(final String dateColumn) {
+            this.dateColumn = LocalDate.parse(dateColumn);
             return this;
         }
 
@@ -234,8 +385,28 @@ public record DataType(
             return this;
         }
 
+        public Builder timeColumnNull() {
+            this.timeColumn = null;
+            return this;
+        }
+
+        public Builder timeColumn(final String timeColumn) {
+            this.timeColumn = LocalTime.parse(timeColumn);
+            return this;
+        }
+
         public Builder timetzColumn(final LocalTime timetzColumn) {
             this.timetzColumn = timetzColumn;
+            return this;
+        }
+
+        public Builder timetzColumnNull() {
+            this.timetzColumn = null;
+            return this;
+        }
+
+        public Builder timetzColumn(final String timetzColumn) {
+            this.timetzColumn = LocalTime.parse(timetzColumn);
             return this;
         }
 
@@ -244,13 +415,38 @@ public record DataType(
             return this;
         }
 
+        public Builder timestampColumnNull() {
+            this.timestampColumn = null;
+            return this;
+        }
+
+        public Builder timestampColumn(final String timestampColumn) {
+            this.timestampColumn = LocalDateTime.parse(timestampColumn);
+            return this;
+        }
+
         public Builder timestamptzColumn(final LocalDateTime timestamptzColumn) {
             this.timestamptzColumn = timestamptzColumn;
             return this;
         }
 
+        public Builder timestamptzColumnNull() {
+            this.timestamptzColumn = null;
+            return this;
+        }
+
+        public Builder timestamptzColumn(final String timestamptzColumn) {
+            this.timestamptzColumn = LocalDateTime.parse(timestamptzColumn);
+            return this;
+        }
+
         public Builder xmlColumn(final String xmlColumn) {
             this.xmlColumn = xmlColumn;
+            return this;
+        }
+
+        public Builder xmlColumnNull() {
+            this.xmlColumn = null;
             return this;
         }
 

@@ -12,7 +12,6 @@ import org.example.generated.tables.Tables;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.math.BigDecimal;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -36,8 +35,8 @@ public class SampleTest {
         final var member = Member.builder()
                 .id(2L)
                 .name("Nobita")
-                .birthday(LocalDate.parse("1990-08-07"))
-                .createdAt(LocalDateTime.parse("2024-03-30T01:22:34"))
+                .birthday("1990-08-07")
+                .createdAt("2024-03-30T01:22:34")
                 .build();
 
         final var member2 = Member.builder().id(3L)
@@ -96,10 +95,11 @@ public class SampleTest {
                 .byteaColumn("0xDEADBEEF".getBytes())
                 .charColumn("A")
                 .bpcharColumn("abc")
-                .numericColumn(BigDecimal.valueOf(123.45))
+//                .numericColumn(BigDecimal.valueOf(123.45))
+                .numericColumn(123.45)
                 .int4Column(123456)
                 .serialColumn(1)
-                .int2Column(Short.valueOf("123"))
+                .int2Column(123)
                 .smallserialColumn(Short.valueOf("1"))
                 .float4Column("3.14")
                 .float8Column(3.141592653589793)
@@ -109,7 +109,7 @@ public class SampleTest {
                 .varcharColumn("Sample")
                 .dateColumn(LocalDate.parse("2024-04-06"))
                 .timeColumn(LocalTime.parse("14:30:00"))
-                .timestampColumn(LocalDateTime.parse("2024-04-06T14:30:00.000000"))
+                .timestampColumn("2024-04-06T14:30:00.000000")
                 .timestamptzColumn(LocalDateTime.parse("2024-04-06T09:00:00.000000"))
                 .xmlColumn("<data>sample</data>").build();
 
