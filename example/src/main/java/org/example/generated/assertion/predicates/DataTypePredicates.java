@@ -260,6 +260,10 @@ public class DataTypePredicates {
         return (entity) -> Objects.equals(entity.int8Column(), int8Column);
     }
 
+    public static Predicate<DataTypeEntity> int8Column(final int int8Column) {
+        return (entity) -> entity.int8Column() == (long) int8Column;
+    }
+
     public static Predicate<DataTypeEntity> bigserialColumn(final Predicate<Long> predicate) {
         return (entity) -> predicate.test(entity.bigserialColumn());
     }
@@ -268,12 +272,20 @@ public class DataTypePredicates {
         return (entity) -> Objects.equals(entity.bigserialColumn(), bigserialColumn);
     }
 
+    public static Predicate<DataTypeEntity> bigserialColumn(final int bigserialColumn) {
+        return (entity) -> entity.bigserialColumn() == (long) bigserialColumn;
+    }
+
     public static Predicate<DataTypeEntity> oidColumn(final Predicate<Long> predicate) {
         return (entity) -> predicate.test(entity.oidColumn());
     }
 
     public static Predicate<DataTypeEntity> oidColumn(final Long oidColumn) {
         return (entity) -> Objects.equals(entity.oidColumn(), oidColumn);
+    }
+
+    public static Predicate<DataTypeEntity> oidColumn(final int oidColumn) {
+        return (entity) -> entity.oidColumn() == (long) oidColumn;
     }
 
     public static Predicate<DataTypeEntity> byteaColumn(final Predicate<byte[]> predicate) {
@@ -308,6 +320,18 @@ public class DataTypePredicates {
         return (entity) -> Objects.equals(entity.numericColumn(), numericColumn);
     }
 
+    public static Predicate<DataTypeEntity> numericColumn(final int numericColumn) {
+        return (entity) -> Objects.equals(entity.numericColumn(), BigDecimal.valueOf(numericColumn));
+    }
+
+    public static Predicate<DataTypeEntity> numericColumn(final long numericColumn) {
+        return (entity) -> Objects.equals(entity.numericColumn(), BigDecimal.valueOf(numericColumn));
+    }
+
+    public static Predicate<DataTypeEntity> numericColumn(final double numericColumn) {
+        return (entity) -> Objects.equals(entity.numericColumn(), BigDecimal.valueOf(numericColumn));
+    }
+
     public static Predicate<DataTypeEntity> int4Column(final Predicate<Integer> predicate) {
         return (entity) -> predicate.test(entity.int4Column());
     }
@@ -332,12 +356,26 @@ public class DataTypePredicates {
         return (entity) -> Objects.equals(entity.int2Column(), int2Column);
     }
 
+    public static Predicate<DataTypeEntity> int2Column(final int int2Column) {
+        if (int2Column > Short.MAX_VALUE || int2Column < Short.MIN_VALUE) {
+            throw new IllegalArgumentException("out of range: " + int2Column);
+        }
+        return (entity) -> entity.int2Column() == (short) int2Column;
+    }
+
     public static Predicate<DataTypeEntity> smallserialColumn(final Predicate<Short> predicate) {
         return (entity) -> predicate.test(entity.smallserialColumn());
     }
 
     public static Predicate<DataTypeEntity> smallserialColumn(final Short smallserialColumn) {
         return (entity) -> Objects.equals(entity.smallserialColumn(), smallserialColumn);
+    }
+
+    public static Predicate<DataTypeEntity> smallserialColumn(final int smallserialColumn) {
+        if (smallserialColumn > Short.MAX_VALUE || smallserialColumn < Short.MIN_VALUE) {
+            throw new IllegalArgumentException("out of range: " + smallserialColumn);
+        }
+        return (entity) -> entity.smallserialColumn() == (short) smallserialColumn;
     }
 
     public static Predicate<DataTypeEntity> float4Column(final Predicate<String> predicate) {
@@ -396,12 +434,20 @@ public class DataTypePredicates {
         return (entity) -> Objects.equals(entity.dateColumn(), dateColumn);
     }
 
+    public static Predicate<DataTypeEntity> dateColumn(final String dateColumn) {
+        return (entity) -> Objects.equals(entity.dateColumn(), LocalDate.parse(dateColumn));
+    }
+
     public static Predicate<DataTypeEntity> timeColumn(final Predicate<LocalTime> predicate) {
         return (entity) -> predicate.test(entity.timeColumn());
     }
 
     public static Predicate<DataTypeEntity> timeColumn(final LocalTime timeColumn) {
         return (entity) -> Objects.equals(entity.timeColumn(), timeColumn);
+    }
+
+    public static Predicate<DataTypeEntity> timeColumn(final String timeColumn) {
+        return (entity) -> Objects.equals(entity.timeColumn(), LocalTime.parse(timeColumn));
     }
 
     public static Predicate<DataTypeEntity> timetzColumn(final Predicate<LocalTime> predicate) {
@@ -412,6 +458,10 @@ public class DataTypePredicates {
         return (entity) -> Objects.equals(entity.timetzColumn(), timetzColumn);
     }
 
+    public static Predicate<DataTypeEntity> timetzColumn(final String timetzColumn) {
+        return (entity) -> Objects.equals(entity.timetzColumn(), LocalTime.parse(timetzColumn));
+    }
+
     public static Predicate<DataTypeEntity> timestampColumn(final Predicate<LocalDateTime> predicate) {
         return (entity) -> predicate.test(entity.timestampColumn());
     }
@@ -420,12 +470,20 @@ public class DataTypePredicates {
         return (entity) -> Objects.equals(entity.timestampColumn(), timestampColumn);
     }
 
+    public static Predicate<DataTypeEntity> timestampColumn(final String timestampColumn) {
+        return (entity) -> Objects.equals(entity.timestampColumn(), LocalDateTime.parse(timestampColumn));
+    }
+
     public static Predicate<DataTypeEntity> timestamptzColumn(final Predicate<LocalDateTime> predicate) {
         return (entity) -> predicate.test(entity.timestamptzColumn());
     }
 
     public static Predicate<DataTypeEntity> timestamptzColumn(final LocalDateTime timestamptzColumn) {
         return (entity) -> Objects.equals(entity.timestamptzColumn(), timestamptzColumn);
+    }
+
+    public static Predicate<DataTypeEntity> timestamptzColumn(final String timestamptzColumn) {
+        return (entity) -> Objects.equals(entity.timestamptzColumn(), LocalDateTime.parse(timestamptzColumn));
     }
 
     public static Predicate<DataTypeEntity> xmlColumn(final Predicate<String> predicate) {

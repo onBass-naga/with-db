@@ -54,9 +54,38 @@ public class ${table.upperCamelCaseSingularName()}Predicates {
         return (entity) -> Objects.equals(entity.${column.lowerCamelCaseName()}(), ${column.lowerCamelCaseName()});
     }
 
-    <#if column.className() == "Date" || column.className() == "Time" || column.className() == "Timestamp">
+    <#if column.isTimeModule()>
     public static Predicate<${table.upperCamelCaseSingularName()}Entity> ${column.lowerCamelCaseName()}(final String ${column.lowerCamelCaseName()}) {
-        return (entity) -> Objects.equals(entity.${column.lowerCamelCaseName()}(), ${column.className()}.valueOf(${column.lowerCamelCaseName()}));
+        return (entity) -> Objects.equals(entity.${column.lowerCamelCaseName()}(), ${column.className()}.parse(${column.lowerCamelCaseName()}));
+    }
+
+    </#if>
+    <#if column.className() == "Long">
+    public static Predicate<${table.upperCamelCaseSingularName()}Entity> ${column.lowerCamelCaseName()}(final int ${column.lowerCamelCaseName()}) {
+        return (entity) -> entity.${column.lowerCamelCaseName()}() == (long) ${column.lowerCamelCaseName()};
+    }
+
+    </#if>
+    <#if column.className() == "Short">
+    public static Predicate<${table.upperCamelCaseSingularName()}Entity> ${column.lowerCamelCaseName()}(final int ${column.lowerCamelCaseName()}) {
+        if (${column.lowerCamelCaseName()} > Short.MAX_VALUE || ${column.lowerCamelCaseName()} < Short.MIN_VALUE) {
+            throw new IllegalArgumentException("out of range: " + ${column.lowerCamelCaseName()});
+        }
+        return (entity) -> entity.${column.lowerCamelCaseName()}() == (short) ${column.lowerCamelCaseName()};
+    }
+
+    </#if>
+    <#if column.className() == "BigDecimal">
+    public static Predicate<${table.upperCamelCaseSingularName()}Entity> ${column.lowerCamelCaseName()}(final int ${column.lowerCamelCaseName()}) {
+        return (entity) -> Objects.equals(entity.${column.lowerCamelCaseName()}(), BigDecimal.valueOf(${column.lowerCamelCaseName()}));
+    }
+
+    public static Predicate<${table.upperCamelCaseSingularName()}Entity> ${column.lowerCamelCaseName()}(final long ${column.lowerCamelCaseName()}) {
+        return (entity) -> Objects.equals(entity.${column.lowerCamelCaseName()}(), BigDecimal.valueOf(${column.lowerCamelCaseName()}));
+    }
+
+    public static Predicate<${table.upperCamelCaseSingularName()}Entity> ${column.lowerCamelCaseName()}(final double ${column.lowerCamelCaseName()}) {
+        return (entity) -> Objects.equals(entity.${column.lowerCamelCaseName()}(), BigDecimal.valueOf(${column.lowerCamelCaseName()}));
     }
 
     </#if>

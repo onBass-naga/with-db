@@ -70,6 +70,10 @@ public class MemberPredicates {
         return (entity) -> Objects.equals(entity.id(), id);
     }
 
+    public static Predicate<MemberEntity> id(final int id) {
+        return (entity) -> entity.id() == (long) id;
+    }
+
     public static Predicate<MemberEntity> name(final Predicate<String> predicate) {
         return (entity) -> predicate.test(entity.name());
     }
@@ -86,12 +90,20 @@ public class MemberPredicates {
         return (entity) -> Objects.equals(entity.birthday(), birthday);
     }
 
+    public static Predicate<MemberEntity> birthday(final String birthday) {
+        return (entity) -> Objects.equals(entity.birthday(), LocalDate.parse(birthday));
+    }
+
     public static Predicate<MemberEntity> createdAt(final Predicate<LocalDateTime> predicate) {
         return (entity) -> predicate.test(entity.createdAt());
     }
 
     public static Predicate<MemberEntity> createdAt(final LocalDateTime createdAt) {
         return (entity) -> Objects.equals(entity.createdAt(), createdAt);
+    }
+
+    public static Predicate<MemberEntity> createdAt(final String createdAt) {
+        return (entity) -> Objects.equals(entity.createdAt(), LocalDateTime.parse(createdAt));
     }
 
 }
